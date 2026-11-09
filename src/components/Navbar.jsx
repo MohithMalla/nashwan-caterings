@@ -37,66 +37,45 @@ export default function Navbar({
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 py-3 sm:py-4 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-black/95 via-black/60 to-transparent">
+      <header className="fixed top-0 left-0 right-0 z-50 py-4 sm:py-5 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-[#011227]/90 via-[#01142B]/60 to-transparent">
         <div className="max-w-[1750px] mx-auto flex items-center justify-between">
           
-          {/* Left Section: Bigger Logo, Vertical Divider & Direct Line */}
-          <div className="flex items-center gap-4 sm:gap-6">
-            {/* Increased Logo Size */}
+          {/* Left Section: Cyan & White Nashwan Logo */}
+          <div className="flex items-center">
             <button onClick={() => handleNav('home')} className="flex items-center shrink-0 text-left">
               <img 
                 src="assets/logo.png" 
-                onError={(e) => { e.target.src = '/assets/logo.png' }}
+                onError={(e) => { e.target.src = 'assets/logo.png' }}
                 alt="Nashwan Catering Services" 
-                className="h-14 sm:h-16 md:h-20 lg:h-22 w-auto object-contain drop-shadow-[0_4px_16px_rgba(212,175,55,0.3)] transition-transform hover:scale-105 duration-300"
+                className="h-12 sm:h-14 md:h-16 lg:h-18 w-auto object-contain transition-transform hover:scale-105 duration-300"
               />
             </button>
-
-            {/* Vertical Divider Line */}
-            <div className="hidden md:block h-10 w-[1px] bg-[#8C6D37]/50" />
-
-            {/* Catering Direct Line with Phone Circle */}
-            <div className="hidden md:flex items-center gap-3">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#D4AF37]/50 bg-[#D4AF37]/10 flex items-center justify-center shrink-0">
-                <Phone className="w-4 h-4 text-[#E5A947]" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] tracking-wider text-[#D4AF37] uppercase font-bold leading-tight">
-                  CATERING DIRECT LINE
-                </span>
-                <div className="flex items-center gap-1.5 text-white font-medium text-sm sm:text-[15px] tracking-wide leading-tight mt-0.5">
-                  <a href="tel:9492247495" className="hover:text-[#E5A947] transition-colors">9492247495</a>
-                  <span className="text-[#D4AF37] text-xs leading-none">•</span>
-                  <a href="tel:9949390829" className="hover:text-[#E5A947] transition-colors">9949390829</a>
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Center Navigation Links (Matching Screenshot Exactly) */}
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 text-sm font-normal">
+          {/* Center Navigation Links (Navigation: Montserrat 500) */}
+          <nav className="font-montserrat hidden lg:flex items-center space-x-7 xl:space-x-9 text-xs sm:text-[13px] tracking-wider uppercase font-medium">
             {/* Home */}
             <button 
               onClick={() => handleNav('home')}
-              className={`transition-colors relative pb-1 ${
+              className={`transition-colors relative ${
                 activePage === 'home' 
-                  ? 'text-white font-medium border-b-2 border-[#D4AF37]' 
-                  : 'text-neutral-200 hover:text-[#D4AF37]'
+                  ? 'text-[#ECC870] font-bold' 
+                  : 'text-white/85 hover:text-white'
               }`}
             >
-              Home
+              HOME
             </button>
 
             {/* About */}
             <button 
               onClick={() => handleNav('about')}
-              className={`transition-colors relative pb-1 ${
+              className={`transition-colors ${
                 activePage === 'about' 
-                  ? 'text-white font-medium border-b-2 border-[#D4AF37]' 
-                  : 'text-neutral-200 hover:text-[#D4AF37]'
+                  ? 'text-[#ECC870] font-bold' 
+                  : 'text-white/85 hover:text-white'
               }`}
             >
-              About
+              ABOUT
             </button>
 
             {/* Services with Dropdown Chevron */}
@@ -107,20 +86,20 @@ export default function Navbar({
             >
               <button 
                 onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
-                className={`transition-colors flex items-center gap-1 relative pb-1 ${
-                  activePage === 'custom' 
-                    ? 'text-white font-medium border-b-2 border-[#D4AF37]' 
-                    : 'text-neutral-200 hover:text-[#D4AF37]'
+                className={`transition-colors flex items-center gap-1.5 ${
+                  activePage === 'custom' || servicesDropdownOpen
+                    ? 'text-[#ECC870] font-bold' 
+                    : 'text-white/85 hover:text-white'
                 }`}
               >
-                <span>Services</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <span>SERVICES</span>
+                <ChevronDown className="w-3.5 h-3.5 text-white/70" />
               </button>
 
               {servicesDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-72 bg-[#0D0B09]/95 backdrop-blur-xl border border-[#D4AF37]/40 rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.85)] py-2 z-50">
-                  <div className="px-3.5 py-1.5 border-b border-[#D4AF37]/20 mb-1">
-                    <span className="text-[10px] uppercase tracking-widest text-[#D4AF37] font-semibold">Specialized Offerings</span>
+                <div className="absolute top-full left-0 mt-2 w-72 bg-[#08182E]/95 backdrop-blur-xl border border-[#ECC870]/40 rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.85)] py-2 z-50">
+                  <div className="px-3.5 py-1.5 border-b border-[#ECC870]/20 mb-1">
+                    <span className="text-[10px] uppercase tracking-widest text-[#ECC870] font-semibold">Specialized Offerings</span>
                   </div>
                   {servicesList.map((service, idx) => (
                     <button
@@ -129,7 +108,7 @@ export default function Navbar({
                         setServicesDropdownOpen(false);
                         handleNav('custom');
                       }}
-                      className="w-full text-left px-3.5 py-2 hover:bg-[#D4AF37]/15 block transition-colors"
+                      className="w-full text-left px-3.5 py-2 hover:bg-[#ECC870]/15 block transition-colors"
                     >
                       <div className="text-xs font-semibold text-white">{service.title}</div>
                       <div className="text-[10px] text-neutral-400">{service.desc}</div>
@@ -142,66 +121,65 @@ export default function Navbar({
             {/* Menu */}
             <button 
               onClick={() => handleNav('menu')}
-              className={`transition-colors relative pb-1 ${
+              className={`transition-colors ${
                 activePage === 'menu' 
-                  ? 'text-white font-medium border-b-2 border-[#D4AF37]' 
-                  : 'text-neutral-200 hover:text-[#D4AF37]'
+                  ? 'text-[#ECC870] font-bold' 
+                  : 'text-white/85 hover:text-white'
               }`}
             >
-              Menu
+              MENU
             </button>
 
             {/* Custom Menu */}
             <button 
               onClick={() => handleNav('custom')}
-              className={`transition-colors relative pb-1 ${
+              className={`transition-colors ${
                 activePage === 'custom' 
-                  ? 'text-white font-medium border-b-2 border-[#D4AF37]' 
-                  : 'text-neutral-200 hover:text-[#D4AF37]'
+                  ? 'text-[#ECC870] font-bold' 
+                  : 'text-white/85 hover:text-white'
               }`}
             >
-              Custom Menu
+              CUSTOM MENU
             </button>
 
             {/* Gallery */}
             <button 
               onClick={() => handleNav('gallery')}
-              className={`transition-colors relative pb-1 ${
+              className={`transition-colors ${
                 activePage === 'gallery' 
-                  ? 'text-white font-medium border-b-2 border-[#D4AF37]' 
-                  : 'text-neutral-200 hover:text-[#D4AF37]'
+                  ? 'text-[#ECC870] font-bold' 
+                  : 'text-white/85 hover:text-white'
               }`}
             >
-              Gallery
+              GALLERY
             </button>
 
             {/* Contact */}
             <button 
               onClick={() => handleNav('contact')}
-              className={`transition-colors relative pb-1 ${
+              className={`transition-colors ${
                 activePage === 'contact' 
-                  ? 'text-white font-medium border-b-2 border-[#D4AF37]' 
-                  : 'text-neutral-200 hover:text-[#D4AF37]'
+                  ? 'text-[#ECC870] font-bold' 
+                  : 'text-white/85 hover:text-white'
               }`}
             >
-              Contact
+              CONTACT
             </button>
           </nav>
 
-          {/* Right Section: Pill-Shaped "BOOK NOW" Button */}
+          {/* Right Section: Gold Outlined "BOOK NOW" Button (Button: Montserrat 500) */}
           <div className="flex items-center gap-3">
             <button 
               onClick={onOpenBooking}
-              className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] shadow-[0_4px_20px_rgba(237,168,61,0.4)] hover:shadow-[0_6px_28px_rgba(237,168,61,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+              className="font-montserrat px-6 sm:px-7 py-2.5 rounded-[2px] border border-[#ECC870]/80 hover:border-[#ECC870] hover:bg-[#ECC870]/10 text-white hover:text-[#ECC870] text-xs font-medium uppercase tracking-[0.2em] transition-all duration-200 shadow-sm"
             >
-              <Calendar className="w-4 h-4 text-black stroke-[2.2]" />
-              <span>BOOK NOW</span>
+              BOOK NOW
             </button>
 
             {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg border border-[#8C6D37]/40 text-[#E5A947] lg:hidden"
+              className="p-2 rounded-lg border border-[#ECC870]/40 text-[#ECC870] lg:hidden"
               aria-label="Toggle navigation"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}

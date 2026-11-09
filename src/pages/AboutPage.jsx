@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Award, Heart, Sparkles, Utensils, CheckCircle2, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Award, Heart, Sparkles, Utensils, CheckCircle2, ArrowRight, MessageSquare, Phone } from 'lucide-react';
 import Footer from '../components/Footer';
 
 export default function AboutPage({ onNavigate, onOpenBooking }) {
@@ -8,183 +8,233 @@ export default function AboutPage({ onNavigate, onOpenBooking }) {
       title: 'AUTHENTICITY',
       tag: 'Heritage First',
       desc: "Honouring traditional tastes and Hyderabad's culinary heritage with time-tested recipes and genuine whole spices.",
-      icon: Award
+      icon: (
+        <svg className="w-6 h-6 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      )
     },
     {
       title: 'QUALITY',
       tag: 'Finest Ingredients',
-      desc: 'Selecting ingredients with freshness, flavour, and uncompromising consistency in mind.',
-      icon: Sparkles
+      desc: 'Selecting ingredients with freshness, flavour, aged basmati rice, pure desi ghee and uncompromising consistency.',
+      icon: (
+        <svg className="w-6 h-6 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+          <path d="M6 3h12l4 6-10 12L2 9z" />
+          <path d="M2 9h20M10 3l-2 6 4 12 4-12-2-6" />
+        </svg>
+      )
     },
     {
       title: 'HYGIENE',
       tag: '5-Star Sanitation',
       desc: 'Maintaining careful food preparation, sanitized temperature-controlled storage, and spotless service practices.',
-      icon: ShieldCheck
+      icon: (
+        <svg className="w-6 h-6 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      )
     },
     {
       title: 'PRESENTATION',
       tag: 'Visual Splendour',
-      desc: 'Because exceptional food should delight the eyes with golden chafing displays and floral artistry before the first bite.',
-      icon: Utensils
+      desc: 'Delighting the eyes with roll-top golden chafing displays, underlit marble banquets and floral artistry before the first bite.',
+      icon: (
+        <svg className="w-6 h-6 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+          <path d="M12 4v2M4 18h16a1 1 0 0 0 1-1A9 9 0 0 0 3 17a1 1 0 0 0 1 1z" />
+        </svg>
+      )
     },
     {
       title: 'HOSPITALITY',
       tag: 'Heartfelt Care',
       desc: 'Serving every single guest with warmth, gracious professionalism, and genuine Nizami courtesy.',
-      icon: Heart
+      icon: (
+        <svg className="w-6 h-6 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+      )
     }
   ];
 
   return (
-    <div className="min-h-screen bg-[#080706] text-[#FDFBF7] flex flex-col pt-24 sm:pt-28">
+    <div className="min-h-screen bg-[#01142B] text-[#FDFBF7] flex flex-col pt-24 sm:pt-28">
       
       {/* Hero Banner for About Us */}
-      <section className="relative py-16 sm:py-24 px-4 sm:px-8 lg:px-12 border-b border-[#8C6D37]/30 overflow-hidden">
+      <section className="relative py-16 sm:py-24 px-4 sm:px-8 lg:px-12 overflow-hidden bg-[#01142B]">
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20 pointer-events-none"
-          style={{ backgroundImage: "url('assets/hero-bg.jpg')" }}
+          className="absolute inset-0 bg-cover bg-no-repeat opacity-30 pointer-events-none"
+          style={{ 
+            backgroundImage: "url('assets/hero-bg.jpg')",
+            backgroundPosition: 'right 20% center'
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#080706] via-[#080706]/95 to-[#080706]/70 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#011227] via-[#01142B]/95 to-transparent pointer-events-none" />
 
         <div className="relative z-10 max-w-5xl mx-auto text-center sm:text-left">
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full border border-[#8C6D37]/40 bg-[#D4AF37]/10 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#E5A947]" />
-            <span className="text-[11px] font-semibold tracking-widest uppercase text-[#E5A947]">
+          
+          {/* Eyebrow */}
+          <div className="flex items-center justify-center sm:justify-start gap-3 mb-4">
+            <span className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-[#ECC870]">
               OUR STORY & PHILOSOPHY
             </span>
+            <span className="w-12 h-[1px] bg-[#ECC870]/70 inline-block" />
           </div>
 
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-normal leading-tight text-white mb-4">
             Born in Hyderabad. <br />
-            <span className="italic text-[#E5A947]">Inspired by Tradition. Driven by Taste.</span>
+            <span className="font-serif italic text-[#ECC870]">Inspired by Tradition. Driven by Taste.</span>
           </h1>
 
           <p className="text-neutral-300 text-base sm:text-lg leading-relaxed max-w-3xl">
             Nashwan Caterings began in 2023 with a passion for bringing together exceptional food and genuine hospitality. Our philosophy is built around a simple belief: <strong className="text-white">food is not merely part of an event. It is often the heart of the celebration.</strong>
           </p>
-        </div>
-      </section>
-
-      {/* Main Story & Philosophy Section */}
-      <section className="py-16 px-4 sm:px-8 lg:px-12 max-w-6xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
-          <div className="space-y-6 text-neutral-300 text-sm sm:text-base leading-relaxed">
-            <div className="inline-block border-l-2 border-[#E5A947] pl-4">
-              <h2 className="font-serif text-2xl sm:text-3xl text-white font-normal">
-                More Than Food. <span className="italic text-[#E5A947]">An Experience to Remember.</span>
-              </h2>
-            </div>
-            
-            <p>
-              At Nashwan Caterings, every celebration has a story, and we believe the food should be one of its most memorable chapters.
-            </p>
-            <p>
-              We take inspiration from Hyderabad's incredible food culture while also embracing flavours from across India and contemporary cuisine. Our chefs thoughtfully curate menus ranging from traditional authentic flavours to modern culinary creations, using carefully selected ingredients and balanced spices.
-            </p>
-            <p>
-              Whether we are serving a small private gathering or catering a grand royal wedding, we approach every event with the same obsessive attention to detail: <strong className="text-white">we listen to your ideas, understand your preferences, and create a menu that complements your celebration.</strong>
-            </p>
-
-            <div className="pt-2 flex flex-wrap gap-4">
-              <button 
-                onClick={onOpenBooking}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] text-black font-semibold text-xs tracking-wider uppercase shadow-lg hover:scale-105 transition-all"
-              >
-                <span>Plan Your Celebration</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <button 
-                onClick={() => onNavigate('menu')}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[#8C6D37] text-white hover:bg-white/5 text-xs font-semibold tracking-wider uppercase transition-all"
-              >
-                Explore Menus
-              </button>
-            </div>
-          </div>
-
-          <div className="relative rounded-2xl overflow-hidden border border-[#8C6D37]/40 shadow-2xl group">
-            <img 
-              src="assets/hero-bg.jpg" 
-              alt="Nashwan Catering Banquet Display" 
-              className="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-6 flex flex-col justify-end">
-              <span className="text-[10px] tracking-widest uppercase font-semibold text-[#E5A947]">Authentic Nizam Hospitality</span>
-              <h3 className="font-serif text-xl text-white mt-1">Where Hyderabad's Culinary Heritage Meets Contemporary Elegance</h3>
-            </div>
-          </div>
 
         </div>
       </section>
 
-      {/* The Five Pillars Section */}
-      <section className="py-16 px-4 sm:px-8 lg:px-12 bg-[#0E0C0A] border-y border-[#8C6D37]/30">
+      {/* S-Curve Wave Divider into Ivory Story Section */}
+      <div className="relative w-full h-[46px] sm:h-[62px] md:h-[76px] overflow-hidden leading-none z-10 -mt-[1px]">
+        <svg 
+          viewBox="0 0 1440 90" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="w-full h-full block" 
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="aboutGoldRibbon" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#D4A034" />
+              <stop offset="25%" stopColor="#ECC870" />
+              <stop offset="50%" stopColor="#FFF3CA" />
+              <stop offset="75%" stopColor="#DFB251" />
+              <stop offset="100%" stopColor="#C9932B" />
+            </linearGradient>
+          </defs>
+          <path 
+            d="M 0,45 C 160,85 300,85 520,52 C 800,10 1100,8 1440,18 L 1440,90 L 0,90 Z" 
+            fill="#FAF8F5" 
+          />
+          <path 
+            d="M 0,45 C 160,85 300,85 520,52 C 800,10 1100,8 1440,18" 
+            stroke="url(#aboutGoldRibbon)" 
+            strokeWidth="3.2" 
+            fill="none" 
+          />
+        </svg>
+      </div>
+
+      {/* Main Story Section (Luxury Warm Ivory) */}
+      <section className="py-16 sm:py-20 px-4 sm:px-8 lg:px-12 bg-[#FAF8F5] text-[#0B1E38] w-full">
         <div className="max-w-6xl mx-auto">
           
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs uppercase tracking-widest text-[#E5A947] font-semibold">Our Guiding Values</span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-white mt-1">Our Five Pillars</h2>
-            <p className="text-xs sm:text-sm text-neutral-400 mt-2">
-              The foundational standards that ensure perfection on every plate.
-            </p>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-center">
+            
+            <div className="space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed">
+              <span className="text-[11px] font-semibold tracking-[0.25em] uppercase text-[#D4AF37] block">
+                Bespoke Banqueting
+              </span>
+              <h2 className="font-serif text-2xl sm:text-4xl text-[#0B1E38] font-normal leading-tight">
+                More Than Food. <br />
+                <span className="italic text-[#2BA4EE]">An Experience to Remember.</span>
+              </h2>
+              <p>
+                At Nashwan Caterings, every celebration has a story, and we believe the food should be one of its most memorable chapters.
+              </p>
+              <p>
+                Our master chefs thoughtfully curate menus ranging from traditional Hyderabadi flavours to modern culinary creations, using carefully selected spices, aged basmati and slow-cooked degh traditions.
+              </p>
+              <p>
+                Whether serving a small private gathering or catering a grand royal wedding for 2,000+ guests, we listen to your ideas and execute with flawless timing and impeccable presentation.
+              </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {pillars.map((pillar, idx) => {
-              const Icon = pillar.icon;
-              return (
-                <div 
-                  key={idx}
-                  className="p-5 rounded-2xl bg-[#14120F] border border-[#8C6D37]/30 hover:border-[#E5A947] transition-all duration-300 flex flex-col justify-between group"
+              <div className="pt-2 flex flex-wrap gap-4">
+                <button 
+                  onClick={onOpenBooking}
+                  className="px-7 py-3 rounded-[2px] bg-[#ECC870] hover:bg-[#F3D68A] text-[#01142B] text-xs font-bold uppercase tracking-wider shadow-md transition-all"
                 >
-                  <div>
-                    <div className="w-10 h-10 rounded-xl bg-[#E5A947]/15 border border-[#8C6D37]/40 flex items-center justify-center text-[#E5A947] mb-3 group-hover:bg-[#E5A947] group-hover:text-black transition-colors">
-                      <Icon className="w-5 h-5 stroke-[1.8]" />
-                    </div>
-                    <span className="text-[10px] uppercase tracking-wider text-[#E5A947] font-semibold block mb-1">
-                      {pillar.tag}
-                    </span>
-                    <h3 className="font-serif text-base font-bold text-white mb-2">
-                      {pillar.title}
-                    </h3>
-                    <p className="text-xs text-neutral-300 leading-relaxed">
-                      {pillar.desc}
-                    </p>
-                  </div>
+                  Plan Your Event
+                </button>
+                <button 
+                  onClick={() => onNavigate('menu')}
+                  className="px-7 py-3 rounded-[2px] border border-[#ECC870] text-[#0B1E38] hover:bg-neutral-100 text-xs font-semibold uppercase tracking-wider transition-all"
+                >
+                  Explore Menus →
+                </button>
+              </div>
+            </div>
+
+            {/* Framed Photography */}
+            <div className="rounded-[18px] p-2 bg-gradient-to-b from-[#ECC870]/70 via-[#ECC870]/30 to-[#ECC870]/60 shadow-xl">
+              <div className="relative rounded-[14px] overflow-hidden bg-black h-80 sm:h-96">
+                <img 
+                  src="assets/hero-bg.jpg" 
+                  alt="Nashwan Catering Banquet" 
+                  className="w-full h-full object-cover" 
+                  style={{ objectPosition: '85% 35%' }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <span className="text-[10px] tracking-widest uppercase text-[#ECC870] font-bold block mb-1">
+                    Signature Banqueting
+                  </span>
+                  <p className="font-serif text-lg font-medium text-white">
+                    Royal Chafing Dishes & Underlit Marble Buffets
+                  </p>
                 </div>
-              );
-            })}
+              </div>
+            </div>
+
           </div>
 
         </div>
       </section>
 
-      {/* Corporate & General Brand Narrative Cards */}
-      <section className="py-16 px-4 sm:px-8 lg:px-12 max-w-6xl mx-auto w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* S-Curve Wave Divider into Royal Midnight Blue Pillars Section */}
+      <div className="w-full overflow-hidden leading-none -mt-1 bg-[#FAF8F5] relative z-10">
+        <svg className="w-full h-10 sm:h-14 md:h-18 block" viewBox="0 0 1440 90" fill="none" preserveAspectRatio="none">
+          <path d="M 0,45 C 160,85 300,85 520,52 C 800,10 1100,8 1440,18 L 1440,90 L 0,90 Z" fill="#01142B" />
+          <path d="M 0,45 C 160,85 300,85 520,52 C 800,10 1100,8 1440,18" stroke="#ECC870" strokeWidth="5" fill="none" />
+        </svg>
+      </div>
+
+      {/* Five Pillars Section (Royal Midnight Navy) */}
+      <section className="py-16 sm:py-20 px-4 sm:px-8 lg:px-12 bg-[#01142B] text-white w-full">
+        <div className="max-w-6xl mx-auto">
           
-          <div className="p-8 rounded-2xl bg-[#120F0D] border border-[#8C6D37]/35 relative overflow-hidden">
-            <span className="text-[11px] font-semibold uppercase tracking-widest text-[#E5A947] block mb-2">Celebrations & Weddings</span>
-            <h3 className="font-serif text-2xl text-white mb-3">Rooted in Hyderabad. Crafted with Passion. Served with Heart.</h3>
-            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed mb-4">
-              Inspired by Hyderabad's rich culinary heritage, we blend authentic recipes and traditional spices with fresh ingredients, hygienic preparation, and elegant modern presentation. Every menu is thoughtfully crafted to honour timeless flavours while creating a dining experience that feels special and memorable.
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+            <span className="text-[11px] font-semibold tracking-[0.25em] uppercase text-[#ECC870] block mb-2">
+              OUR CORE VALUES
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl text-white font-normal">
+              The Five Pillars of <span className="italic text-[#ECC870]">Nashwan</span>
+            </h2>
+            <p className="text-neutral-300 text-xs sm:text-sm mt-2">
+              Every banquet we curate is measured against these foundational standards of excellence.
             </p>
-            <div className="text-xs text-[#E5A947] italic">
-              "Because for us, catering is more than serving food. It is about creating moments that bring people together."
-            </div>
           </div>
 
-          <div className="p-8 rounded-2xl bg-[#120F0D] border border-[#8C6D37]/35 relative overflow-hidden">
-            <span className="text-[11px] font-semibold uppercase tracking-widest text-[#E5A947] block mb-2">Distinguished Corporate Banquets</span>
-            <h3 className="font-serif text-2xl text-white mb-3">A Celebration of Taste. A Tradition of Elegance.</h3>
-            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed mb-4">
-              Whether it is an executive summit, employee recognition gala, or prestigious conference, our culinary approach honours traditional recipes while embracing contemporary creativity and sophisticated presentation with discreet, white-glove corporate protocol.
-            </p>
-            <div className="text-xs text-[#E5A947] italic">
-              "We transform flavours into experiences, celebrations into cherished memories, and hospitality into an art."
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+            {pillars.map((pillar, i) => (
+              <div 
+                key={i}
+                className="p-6 rounded-[16px] bg-[#03152E] border border-[#ECC870]/60 hover:border-[#ECC870] transition-all duration-300 flex flex-col items-center text-center shadow-lg group hover:-translate-y-1.5"
+              >
+                <div className="w-12 h-12 rounded-full border border-[#ECC870] bg-[#01142B] flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform">
+                  {pillar.icon}
+                </div>
+                <div className="font-serif text-white font-bold text-sm tracking-wide mb-1 group-hover:text-[#ECC870] transition-colors">
+                  {pillar.title}
+                </div>
+                <div className="text-[10px] text-[#2BA4EE] font-semibold uppercase tracking-wider mb-2">
+                  {pillar.tag}
+                </div>
+                <p className="text-xs text-neutral-300 leading-relaxed">
+                  {pillar.desc}
+                </p>
+              </div>
+            ))}
           </div>
 
         </div>

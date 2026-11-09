@@ -36,9 +36,15 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['"Playfair Display"', '"Cormorant Garamond"', 'Cinzel', 'serif'],
-        display: ['Cinzel', '"Playfair Display"', 'serif'],
-        sans: ['"Plus Jakarta Sans"', 'Montserrat', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        heading: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        cormorant: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        montserrat: ['"Montserrat"', 'sans-serif'],
+        lato: ['"Lato"', 'sans-serif'],
+        sans: ['"Lato"', 'sans-serif'],
+        nav: ['"Montserrat"', 'sans-serif'],
+        button: ['"Montserrat"', 'sans-serif'],
+        label: ['"Montserrat"', 'sans-serif'],
       },
       letterSpacing: {
         widest: '.2em',

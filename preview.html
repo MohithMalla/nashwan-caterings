@@ -6,10 +6,10 @@
   <title>Nashwan Catering Services | The Taste of Hyderabad</title>
   <link rel="icon" type="image/png" href="assets/logo.png">
   
-  <!-- Fonts -->
+  <!-- Fonts: Cormorant Garamond (Headings), Montserrat (Nav/Buttons/Labels), Lato (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -28,8 +28,16 @@
             }
           },
           fontFamily: {
-            serif: ['"Playfair Display"', '"Cormorant Garamond"', 'Georgia', 'serif'],
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            heading: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            cormorant: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            montserrat: ['"Montserrat"', 'sans-serif'],
+            nav: ['"Montserrat"', 'sans-serif'],
+            button: ['"Montserrat"', 'sans-serif'],
+            label: ['"Montserrat"', 'sans-serif'],
+            lato: ['"Lato"', 'sans-serif'],
+            sans: ['"Lato"', 'sans-serif'],
+            body: ['"Lato"', 'sans-serif'],
           }
         }
       }
@@ -45,16 +53,58 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #080706;
+      background-color: #01142B;
       color: #FDFBF7;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Lato', sans-serif;
+      font-weight: 400;
     }
+
+    /* 1. Hero Heading: Cormorant Garamond 400 */
+    h1, .hero-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-weight: 400 !important;
+    }
+
+    /* 2. Section Headings & Menu Headings: Cormorant Garamond 500 */
+    h2, h3, h4, h5, h6, .section-heading, .menu-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-weight: 500 !important;
+    }
+
+    .font-serif, .font-cormorant {
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+    }
+
+    /* 3. Navigation: Montserrat 500 */
+    nav, nav a, nav button, .nav-link, .font-nav {
+      font-family: 'Montserrat', sans-serif !important;
+      font-weight: 500 !important;
+    }
+
+    /* 4. Buttons: Montserrat 500 */
+    button, .btn, .font-button {
+      font-family: 'Montserrat', sans-serif !important;
+      font-weight: 500 !important;
+    }
+
+    /* 5. Body Text: Lato 400 */
+    p, li, input, select, textarea, .font-body, .font-lato {
+      font-family: 'Lato', sans-serif !important;
+      font-weight: 400 !important;
+    }
+
+    /* 6. Small Labels: Montserrat 500 */
+    .small-label, .font-label, .eyebrow, [class*="tracking-[0.2"], [class*="tracking-[0.3"], [class*="tracking-widest"], [class*="tracking-ultra"] {
+      font-family: 'Montserrat', sans-serif !important;
+      font-weight: 500 !important;
+    }
+
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0d0c0a; }
-    ::-webkit-scrollbar-thumb { background: #E5A947; border-radius: 9999px; }
+    ::-webkit-scrollbar-track { background: #011227; }
+    ::-webkit-scrollbar-thumb { background: #ECC870; border-radius: 9999px; }
   </style>
 </head>
-<body class="bg-[#080706] text-[#FDFBF7] selection:bg-[#E5A947]/30 selection:text-white">
+<body class="bg-[#01142B] text-[#FDFBF7] selection:bg-[#ECC870]/30 selection:text-white min-h-screen">
 
   <div id="root"></div>
 
@@ -64,41 +114,329 @@
     function App() {
       const [activePage, setActivePage] = useState('home');
       const [bookingOpen, setBookingOpen] = useState(false);
-      const [customMenuOpen, setCustomMenuOpen] = useState(false);
       const [servicesDropdown, setServicesDropdown] = useState(false);
       const [mobileMenu, setMobileMenu] = useState(false);
-      const [menuTab, setMenuTab] = useState('hyderabadi');
-      const [galleryFilter, setGalleryFilter] = useState('all');
+      const [menuActiveCategory, setMenuActiveCategory] = useState('veg');
+      const [menuActivePackage, setMenuActivePackage] = useState('simple');
+      const [curatorCategory, setCuratorCategory] = useState('all');
       const [toast, setToast] = useState(null);
 
+      // Custom Menu Curator state
       const [selectedDishes, setSelectedDishes] = useState([
-        'Zafrani Mutton Dum Biryani',
-        'Mirchi Ka Salan & Dahi Ki Chutney',
-        'Shahi Double Ka Meetha'
+        'Zafrani Mutton Dum Biryani (Aged Basmati, Saffron)',
+        'Chicken Majestic Flambé (Signature)',
+        'Mirchi Ka Salan (Slow-Roasted Peanut Sesame Gravy)',
+        'Dahi Ki Chutney with Pomegranate & Mint',
+        'Shahi Double Ka Meetha (Pure Ghee & Pistachio)'
       ]);
+
+      const [curatorDetails, setCuratorDetails] = useState({
+        name: '',
+        phone: '',
+        eventType: 'Royal Wedding Banquet',
+        guests: '300 - 500 Guests',
+        date: ''
+      });
 
       const [bookingData, setBookingData] = useState({
         name: '', phone: '', eventType: 'Royal Wedding Banquet', date: '', guests: '300 - 600 Guests', notes: ''
       });
 
-      const dishesList = [
-        'Zafrani Mutton Dum Biryani', 'Special Chicken Dum Biryani', 'Mutton Seekh Kebab', 'Chicken Majestic Flambé',
-        'Paneer Malai Tikka', 'Crispy Chilli Corn', 'Dum Ka Murgh Hyderabadi', 'Mutton Rogan Josh Kashmiri',
-        'Butter Chicken Delicacy', 'Paneer Butter Masala', 'Rumali Roti & Butter Naan', 'Mirchi Ka Salan & Dahi Ki Chutney',
-        'Shahi Double Ka Meetha', 'Qubani Ka Meetha with Cream', 'Hot Gulab Jamun with Rabdi', 'Shahi Zafrani Sharbat'
-      ];
-
-      const toggleDish = (dish) => {
-        if (selectedDishes.includes(dish)) {
-          setSelectedDishes(selectedDishes.filter(d => d !== dish));
-        } else {
-          setSelectedDishes([...selectedDishes, dish]);
+      
+      const menuData = {
+        veg: {
+          title: 'Vegetarian Menus',
+          packages: {
+            simple: {
+              id: 'simple',
+              name: 'Simple Veg Menu',
+              minOrder: '50 pax',
+              servingStaff: 'Provided',
+              customization: 'Available',
+              sections: [
+                { title: 'Snacks (any One)', items: ['Cut Mirchi', 'Mirchi Bajji', 'Alu Bajji'] },
+                { title: 'Veg Curries (any One)', items: ['Alu Kurma', 'Gutti Vankaya', 'Gutti Dondakaya', 'Mixed Veg Curry'] },
+                { title: 'Veg Flavoured Rice (any One)', items: ['Veg Palao', 'Veg Dum Biryani', 'Veg Biryani', 'Bagara Rice', 'Pulihora'] },
+                { title: 'Rice Accomplishments (any Three)', items: ['Dal', 'Sambar/Rasam', 'Powders with Ghee'] },
+                { title: 'Sweets (any One)', items: ['Kaddu Ka Kheer', 'Kala Jamun', 'Double Ka Meeta', 'Gulab Jamun'] },
+                { title: 'Common Items (any Seven)', items: ['White Rice', 'Papad/Fryarms', 'Raitha', 'Curd', 'Pickles', 'Cucumber Salad', 'Water'] }
+              ]
+            },
+            regular: {
+              id: 'regular',
+              name: 'Regular Veg Menu',
+              minOrder: '100 pax',
+              servingStaff: 'Provided',
+              customization: 'Available',
+              sections: [
+                { title: 'Indian Breads (any One)', items: ['Rumali Roti', 'Poori', 'Chapati', 'Pulka'] },
+                { title: 'Veg Curries (any Two)', items: ['Chana Masala', 'Paneer Butter Masala', 'Alu Kurma', 'Kadai Paneer', 'Gutti Vankaya Massala'] },
+                { title: 'Veg Flavoured Rice (any One)', items: ['Veg Palao', 'Veg Biryani', 'Bagara Rice', 'Veg Dum Biryani', 'Pulihora'] },
+                { title: 'Rice Accomplishments (any Two)', items: ['Dal', 'Sambar/Rasam'] },
+                { title: 'Desserts (any Two)', items: ['Sweet', 'Ice Cream'] },
+                { title: 'Common Items (any Seven)', items: ['White Rice', 'Plain Papads', 'Curd', 'Raitha', 'Pickles', 'Cucumber Salad', 'Water'] }
+              ]
+            },
+            standard: {
+              id: 'standard',
+              name: 'Standard Veg Menu',
+              minOrder: '50 pax',
+              servingStaff: 'Provided',
+              customization: 'Available',
+              sections: [
+                { title: 'Salad (any One)', items: ['Green Salad', 'Sprouted Salad', 'Chana Salad', 'Boiled Green Gram', 'Boiled Peanut', 'Cucumber Salad'] },
+                { title: 'Snacks (any One)', items: ['Aratikaya Bajji', 'Alu Bajji', 'Corn Wada', 'Corn Samosa', 'Dahi Wada', 'Alu Bonda', 'Mirchi Bajji', 'French Fries', 'Alu Tikki', 'Veg Nuggets', 'Veg Cutlet', 'Cut Mirchi'] },
+                { title: 'Veg Curries (any Two)', items: ['Beans Panjab Curry', 'Chana Masala', 'Methi Chaman', 'Green Peas Curry', 'Bagara Baingan', 'Paneer Butter Masala', 'Tomato Phool Makhani', 'Mixed Veg Curry', 'Alu Kurma', 'Chole Aloo', 'Baby Corn Palak', 'Malai Methi Paneer', 'Baby Corn Mutter Curry', 'Sweet Corn Curry', 'Veg Kofta', 'Stuffed Tomato Curry', 'Kadai Paneer', 'Achary Paneer', 'Paneer Jalfrezi', 'Paneer Rajma', 'Paneer Do Pyaza'] },
+                { title: 'Veg Fry (any Two)', items: ['Bendi Fry', 'Capsicum Pakodi', 'Mixed Veg Fry', 'Gobi Pakoda', 'Brinjal Pakoda', 'Cabbage Pakoda', 'Palak Pakodi'] },
+                { title: 'Dal (any One)', items: ['Palak Dal', 'Tomato Pappu', 'Mango Pappu', 'Tadka Dal', 'Thotakura Pappu', 'Dal Fry', 'Dal Makhani'] },
+                { title: 'Indian Breads (any One)', items: ['Rumali Roti', 'Pulka', 'Chapati', 'Poori', 'Palak Poori'] },
+                { title: 'Veg Flavoured Rice (any One)', items: ['Veg Biryani', 'Veg Fried Rice', 'Mutter Panner Pulao', 'Corn Kaju Palao', 'Veg Dum Biryani', 'Bagara Rice', 'Green Peas Palao', 'Jeera Rice'] },
+                { title: 'Semi Liquids (any One)', items: ['Drumstick Sambar', 'Madras Sambar', 'Ulava Charu', 'Pappu Charu', 'Tomato Rasam', 'Pepper Rasam', 'Kobbari Charu'] },
+                { title: 'Papads (any One)', items: ['Plain Papad', 'Masala Papad', 'Rice Appadam'] },
+                { title: 'Raitha (any One)', items: ['Onion Carrot Raitha', 'Plain Raitha', 'Boondhi Raitha', 'Tadkha Raitha', 'Kela Raitha', 'Grape Raitha', 'Pineapple Raitha'] },
+                { title: 'Sweets (any Two)', items: ['Finger Jamun', 'Kaddu Ka Kheer', 'Badusha', 'Kala Jamun', 'Laddu', 'Besin Chekki', 'Double Ka Meeta', 'Gazar Ka Halwa', 'Milk Mysore Pak', 'Carrot Halwa', 'Gulab Jamun', 'Angur Jamun'] },
+                { title: 'Desserts (any One)', items: ['Venilla Ice Cream', 'Tutty Fruity', 'Mango Ice Cream', 'Fruit Salad with Custard', 'Butter Scotch Ice Cream', 'Strawberry Ice Cream', 'Raw Fruits'] },
+                { title: 'Common Items (any Five)', items: ['Fryums', 'Water', 'White Rice', 'Curd'] }
+              ]
+            },
+            gold: {
+              id: 'gold',
+              name: 'Gold Veg Menu',
+              minOrder: '150 pax',
+              servingStaff: 'Provided',
+              customization: 'Available',
+              sections: [
+                { title: 'Welcome Drink (any One)', items: ['Grape Juice', 'Mosambi Juice', 'Orange Juice', 'Sugarcane Juice', 'Mango Juice', 'Water Melon Juice', 'Fresh Lime Juice', 'Jaljeera', 'Sweet Lassi', 'ButterMilk', 'Badam Milk', 'Fruit Punch', 'Assorted Soft Drinks'] },
+                { title: 'Veg Soups (any One)', items: ['Veg Mancho Soup', 'Hot and Sour Soup', 'Green Peas Shorba', 'Sweet Corn Soup', 'Tomato Soup'] },
+                { title: 'Salad (any One)', items: ['Green Salad', 'Sprouted Salad', 'Chana Salad', 'Boiled Green Gram', 'Boiled Peanut', 'Cucumber Salad'] },
+                { title: 'Veg Starters (any One)', items: ['Pesara Punugulu', 'Veg Bullets', 'Veg Manchuriya', 'Veg Nuggets', 'Veg Lollypops', 'Veg Fingers', 'Veg Spring Rolls', 'Shangai Rolls', 'Corn Rolls', 'Corn Samosa', 'Chilly Baby Corn', 'Paneer Tikka', 'Chilly Paneer', 'Paneer Lollypops', 'Gobi 65', 'Chilly Gobi'] },
+                { title: 'Snacks (any One)', items: ['Veg Cutlet', 'Veg Nuggets', 'Veg Lollypops', 'Corn Wada', 'Corn Samosa', 'Bread Pakoda', 'Dahi Wada', 'Minapa Wada', 'Pesara Wada', 'Veg Bonda', 'Alu Bonda', 'Mirchi Bajji', 'Aratikaya Bajji', 'French Fries', 'Palak Pakoda', 'Methi Pakoda', 'Alu Tikki', 'Banana Chips', 'Alu Chips', 'Moongdal Mini Samosa', 'Kothimira Wada', 'Kara Boondi', 'Cut Mirchi', 'Capsicum Pakodi', 'Gobi Pakoda', 'Cabbage Pakoda', 'Brinjal Pakoda'] },
+                { title: 'Veg Curries (any Two)', items: ['Chole Aloo', 'Chana Masala', 'Aratikaya Curry', 'Navarathan Kurma', 'Tomato Phool Makhani', 'Methi Chaman', 'Kaju Mullakada', 'Green Peas Curry', 'Kadai Paneer', 'Malai Methi Paneer', 'Paneer Butter Masala', 'Paneer Jalfrezi', 'Paneer Rajma', 'Paneer Do Pyaza', 'Alu Paneer Capsicum', 'Alu Palak', 'Alu Kurma', 'Alu Tomato', 'Alu Gobi Tomato', 'Stuffed Tomato Curry', 'Kadai Veg', 'Mixed Veg Curry', 'Veg Kofta', 'Veg Do Pyaza', 'Bagara Baingan', 'Mushroom Masala', 'Baby Onion Curry', 'Baby Corn Palak', 'Baby Corn Mutter Curry', 'Sweet Corn Curry'] },
+                { title: 'Veg Fry (any Two)', items: ['Bendi Fry', 'Dondakai Fry', 'Jeera Alu', 'Beans Poriyal', 'Aratikai Fry', 'Mixed Veg Fry', 'Vankaya Kobbari Karam', 'Vankaya Allam Pachimirchi', 'Chana Coconut Fry', 'Kakarakaya Fry', 'Totakura Chana Fry', 'Chenna Beans Poriyal'] },
+                { title: 'Dal (any One)', items: ['Palak Dal', 'Tomato Pappu', 'Dosakaya Pappu', 'Gangaveli Pappu', 'Lemon Pappu', 'Mango Pappu', 'Mudda Pappu', 'Yellow Dal', 'Tadka Dal', 'Thotakura Pappu', 'Dal Fry', 'Dal Makhani'] },
+                { title: 'Indian Breads (any One)', items: ['Rumali Roti', 'Pulka', 'Chapati', 'Poori', 'Palak Poori', 'Baby Naan', 'Butter Naan', 'Plain Naan', 'Aloo Parata', 'Lacha Paratha', 'Palak Paratha', 'Paneer Kulcha', 'Plain Kulcha', 'Masala Kulcha'] },
+                { title: 'Veg Flavoured Rice (any One)', items: ['Steam Rice', 'Veg Biryani', 'Veg Dum Biryani', 'Veg Fried Rice', 'Bagara Rice', 'Pulihora', 'Mutter Panner Pulao', 'Corn Kaju Palao', 'Green Peas Palao', 'Jeera Rice', 'Bisibella Bath', 'Coconut Fried Rice', 'Gobi Rice', 'Veg Palao', 'Ulavacharu Biryani', 'Vangi Bath', 'Mushroom Biryani', 'Bread Panner Palao'] },
+                { title: 'Semi Liquids (any One)', items: ['Majjiga Pulusu', 'Drumstick Sambar', 'Kaddu Sambar', 'Madras Sambar', 'Ulava Charu', 'Pappu Charu', 'Pachi Pulusu', 'Tomato Rasam', 'Zeera Rasam', 'Pepper Rasam', 'Kobbari Charu', 'Beetroot Rasam'] },
+                { title: 'Pickles (any Two)', items: ['Dondakaya Pachadi', 'Mango Pickle', 'Pandu Mirapakai', 'Dosavakai', 'Lemon Pickle', 'Usarikai Pickle', 'Kothimir Pachadi', 'Goongura Pachadi', 'Tomata Pachadi', 'Beerakaya', 'Allam Pachadi', 'Pudina Pachadi', 'Green Chilly Chutney', 'Red Chilly Chutney'] },
+                { title: 'Papads (any One)', items: ['Plain Papad', 'Masala Papad', 'Rice Appadam', 'Fryums'] },
+                { title: 'Raitha (any One)', items: ['Onion Carrot Raitha', 'Plain Raitha', 'Boondhi Raitha', 'Tadkha Raitha', 'Alu Raitha', 'Kela Raitha', 'Mukati Perugu', 'Mango Raitha', 'Grape Raitha', 'Pineapple Raitha'] },
+                { title: 'Sweets (any Two)', items: ['Bobbatlu', 'Poornalu', 'Kaddu Ka Kheer', 'Badusha', 'Kala Jamun', 'Kova Puri', 'Finger Jamun', 'Laddu', 'Besin Chekki', 'Double Ka Meeta', 'Gazar Ka Halwa', 'Moomg Dal Halwa', 'Milk Mysore Pak', 'Carrot Halwa', 'Ravva Laddu', 'Gulab Jamun', 'Kurbani Ka Meeta', 'Angur Jamun', 'Semiya Payasam'] },
+                { title: 'Desserts (any One)', items: ['Raw Fruits', 'Venilla Ice Cream', 'Tutty Fruity', 'Mango Ice Cream', 'Black Current Ice Cream', 'Venilla With Kaju', 'Fruit Salad with Custard', 'Kulfi', 'Butter Scotch Ice Cream', 'Strawberry Ice Cream'] },
+                { title: 'Pan (any One)', items: ['Sweet Pan', 'Calcutta Pan', 'Sada Pan', 'Jarda Pan'] },
+                { title: 'Common Items (any Six)', items: ['White Rice', 'Curd', 'Plain Papads', 'Powders', 'Water', 'Ghee'] }
+              ]
+            }
+          }
+        },
+        'non-veg': {
+          title: 'Non-Vegetarian Menus',
+          packages: {
+            standard: {
+              id: 'standard',
+              name: 'Standard Non-Veg Menu',
+              minOrder: '100 pax',
+              servingStaff: 'Provided',
+              customization: 'Available',
+              sections: [
+                { title: 'Snacks (any One)', items: ['Dahi Wada', 'Aratikaya Bajji', 'Alu Bajji', 'Alu Bonda', 'French Fries', 'Mirchi Bajji', 'Cut Mirchi'] },
+                { title: 'Non Veg Curries (any One)', items: ['Methi Chicken', 'Kadai Chicken', 'Chicken Masala', 'Butter Chicken', 'Dum Ka Chicken'] },
+                { title: 'Veg Curries (any One)', items: ['Chole Aloo', 'Green Peas Curry', 'Kadai Paneer', 'Paneer Do Pyaza', 'Alu Kurma', 'Chana Masala', 'Navarathan Kurma', 'Bagara Baingan', 'Paneer Butter Masala', 'Mixed Veg Curry', 'Alu Gobi Tomato', 'Alu Tomato', 'Kadai Veg'] },
+                { title: 'Indian Breads (any One)', items: ['Pulka', 'Chapati', 'Poori', 'Rumali Roti'] },
+                { title: 'Non Veg Flavoured Rice (any One)', items: ['Chicken Dum Biryani', 'Mutton Dum Biryani'] },
+                { title: 'Veg Flavoured Rice (any One)', items: ['Veg Dum Biryani', 'Veg Biryani', 'Veg Fried Rice', 'Bagara Rice', 'Green Peas Palao', 'Jeera Rice', 'Veg Palao', 'Pulihora'] },
+                { title: 'Dal (any One)', items: ['Palak Dal', 'Tomato Pappu', 'Gangaveli Pappu', 'Mango Pappu'] },
+                { title: 'Veg Fry (any One)', items: ['Bendi Fry', 'Dondakai Fry', 'Aratikai Fry', 'Mixed Veg Fry', 'Totakura Chana Fry', 'Gobi Pakoda', 'Vankaya Kobbari Karam', 'Brinjal Pakoda'] },
+                { title: 'Sweets (any One)', items: ['Kaddu Ka Kheer', 'Kala Jamun', 'Laddu', 'Besin Chekki', 'Double Ka Meeta', 'Gazar Ka Halwa', 'Moomg Dal Halwa', 'Ravva Laddu', 'Gulab Jamun', 'Angur Jamun'] },
+                { title: 'Desserts (any One)', items: ['Venilla Ice Cream', 'Butter Scotch Ice Cream', 'Fruit Salad with Custard', 'Strawberry Ice Cream', 'Raw Fruits'] },
+                { title: 'Common Items (any Eight)', items: ['Fryums', 'White Rice', 'Curd', 'Sambar/Rasam', 'Raitha', 'Pickles', 'Water', 'Cucumber Salad'] }
+              ]
+            },
+            gold: {
+              id: 'gold',
+              name: 'Gold Non-Veg Menu',
+              minOrder: '150 pax',
+              servingStaff: 'Provided',
+              customization: 'Available',
+              sections: [
+                { title: 'Welcome Drink (any two)', items: ['Mango Blossom', 'Leechi Milk Shake', 'Strawberry Milkshake', 'Assorted Soft Drinks', 'Orange Juice', 'Guava Juice', 'Water Melon Juice', 'ButterMilk', 'Badam Milk', 'Fruit Punch'] },
+                { title: 'Veg Soups (any Two)', items: ['Sweet Corn Soup', 'Veg Mancho Soup', 'Hot and Sour Soup', 'Tomato Soup'] },
+                { title: 'Salad (any Two)', items: ['Sprouted Salad', 'Green Salad', 'Russian Salad'] },
+                { title: 'Non Veg Starters (any Three)', items: ['Chicken Manchuriya', 'Roasted Chicken', 'Chicken Lollypops', 'Ginger Chicken', 'Chicken Tangdi Kabab', 'Murg Malai Kabab', 'Chilli Chicken', 'Chicken Tikka', 'Chicken Spring Rolls', 'Chicken Tikka Masala', 'Mutton 65', 'Masala Egg', 'Chicken Whiskey Wings', 'Keema Samosa', 'Mutton Kabab', 'Mutton Cutlets', 'Meet Balls', 'Mutton Rolls', 'Cheese Chicken Balls', 'Egg 65', 'Garlic Checken Wings'] },
+                { title: 'Veg Starters (any Two)', items: ['Veg Paneer Bullets', 'Veg Spring Rolls', 'Veg Manchuriya', 'Veg Nuggets', 'Veg Lollypops', 'Veg Fingers', 'Crispy Baby Corn', 'Corn Rolls', 'Corn Samosa', 'Chilly Baby Corn', 'Paneer Tikka', 'Chilly Paneer', 'Paneer Lollypops', 'Bread Pakoda', 'Dahi Wada', 'Minapa Wada', 'Pesara Wada', 'Veg Bonda', 'Aratikaya Bajji', 'Alu Bajji', 'Alu Bonda', 'Kachori', 'French Fries', 'Mirchi Bajji', 'Palak Pakoda', 'Methi Pakoda', 'Cut Mirchi', 'Alu Tikki', 'Banana Chips', 'Alu Chips', 'Moongdal Mini Samosa', 'Kothimira Wada', 'Kara Boondi', 'Capsicum Pakodi', 'Gobi Pakoda', 'Brinjal Pakoda', 'Cabbage Pakoda'] },
+                { title: 'Non Veg Curries (any Two)', items: ['Pepper Mutton Curry', 'Ginger Mutton', 'Gongoora Mutton', 'Dum Ka Mutton Curry', 'Kadai Mutton', 'Kheema Mutton Curry', 'Methi Chicken', 'Kadai Chicken', 'Chicken Masala', 'Gongoora Chicken', 'Dum Ka Chicken', 'Ginger Chicken'] },
+                { title: 'Veg Curries (any Two)', items: ['Chana Masala', 'Green Peas Curry', 'Kadai Paneer', 'Paneer Do Pyaza', 'Alu Kurma', 'Navarathan Kurma', 'Bagara Baingan', 'Paneer Butter Masala', 'Mixed Veg Curry', 'Alu Gobi Tomato', 'Alu Tomato', 'Kadai Veg'] },
+                { title: 'Indian Breads (any Two)', items: ['Pulka', 'Butter Naan', 'Poori', 'Rumali Roti'] },
+                { title: 'Non Veg Flavoured Rice (any One)', items: ['Chicken Dum Biryani', 'Mutton Dum Biryani'] },
+                { title: 'Veg Flavoured Rice (any One)', items: ['Veg Dum Biryani', 'Veg Biryani', 'Veg Fried Rice', 'Bagara Rice', 'Green Peas Palao', 'Jeera Rice', 'Veg Palao', 'Pulihora'] },
+                { title: 'Veg Fry (any One)', items: ['Bendi Fry', 'Alu Fry', 'Totakura Chana Fry', 'Gobi Pakoda', 'Vankaya Kobbari Karam', 'Brinjal Pakoda'] },
+                { title: 'Sweets (any Four)', items: ['Kaddu Ka Kheer', 'Kala Jamun', 'Tawa Sweet', 'Besin Chekki', 'Double Ka Meeta', 'Gazar Ka Halwa', 'Moomg Dal Halwa', 'Rasmalai', 'Gulab Jamun', 'Angur Jamun'] },
+                { title: 'Desserts (any One)', items: ['Venilla Ice Cream', 'Butter Scotch Ice Cream', 'Fruit Salad with Custard', 'Strawberry Ice Cream', 'Raw Fruits'] },
+                { title: 'Common Items (any Eight)', items: ['Fryums', 'White Rice', 'Curd', 'Sambar/Rasam', 'Raitha', 'Pickles', 'Water', 'Cucumber Salad'] }
+              ]
+            }
+          }
         }
       };
 
-      const handleNav = (page) => {
+      const curatorDatabase = [
+        {
+          category: 'Welcome Refreshments',
+          items: [
+            { name: 'Shahi Zafrani Sharbat with Basil Seeds', veg: true, desc: 'Chilled saffron cooler infused with royal herbs' },
+            { name: 'Fresh Mint Virgin Mojito', veg: true, desc: 'Crushed garden mint, lime spritz & sparkling soda' },
+            { name: 'Rose Badam Milk with Silver Leaf', veg: true, desc: 'Slow simmered almond milk with Damask rose water' },
+            { name: 'Blue Lagoon Citrus Mocktail', veg: true, desc: 'Vibrant curacao syrup with zesty citrus punch' }
+          ]
+        },
+        {
+          category: 'Hyderabadi Starters (Non-Veg)',
+          items: [
+            { name: 'Chicken Majestic Flambé (Signature)', veg: false, desc: 'Crispy spiced chicken strips tempered with green chillies & curd' },
+            { name: 'Mutton Seekh Kebab (Slow Charcoal Grilled)', veg: false, desc: 'Minced lamb spiced with royal cloves & roasted cumin' },
+            { name: 'Fish Apollo (Tender Boneless Spiced)', veg: false, desc: 'Boneless tender fish tempered with mustard & curry leaves' },
+            { name: 'Tala Hua Gosht (Hyderabadi Crispy Meat)', veg: false, desc: 'Shallow fried mutton morsels with crushed pepper' },
+            { name: 'Murgh Malai Tikka with Cream & Saffron', veg: false, desc: 'Velvety chicken chunks with cardamom & melted cheese' }
+          ]
+        },
+        {
+          category: 'Royal Starters (Veg)',
+          items: [
+            { name: 'Paneer Malai Tikka Angara', veg: true, desc: 'Smoked cottage cheese cubes with bell peppers & cream' },
+            { name: 'Crispy Chilli Baby Corn Salt & Pepper', veg: true, desc: 'Wok tossed crunchy baby corn with oriental spices' },
+            { name: 'Dahi Ke Kebab with Mint Chutney', veg: true, desc: 'Crisp exterior with molten spiced hung curd center' },
+            { name: 'Hara Bhara Kebab with Cashew Center', veg: true, desc: 'Fresh spinach, green peas & mashed potato patty' }
+          ]
+        },
+        {
+          category: 'Signature Rice & Biryani',
+          items: [
+            { name: 'Zafrani Mutton Dum Biryani (Aged Basmati, Saffron)', veg: false, desc: 'The gold standard: layered basmati & succulent meat cooked in sealed degh' },
+            { name: 'Special Chicken Dum Biryani (Hyderabadi Degh)', veg: false, desc: 'Fragrant long-grain rice with traditional brown onion marinade' },
+            { name: 'Vegetable Dum Biryani with Saffron', veg: true, desc: 'Fresh garden vegetables layered with aromatic whole spices' },
+            { name: 'Traditional Bagara Rice with Dalcha', veg: true, desc: 'Spiced tempered rice served with lentil dalcha' },
+            { name: 'Kashmiri Pulao with Roasted Dry Fruits', veg: true, desc: 'Sweet-scented pulao studded with cashews, almonds & raisins' }
+          ]
+        },
+        {
+          category: 'Curries & Gravies',
+          items: [
+            { name: 'Dum Ka Murgh (Cashew Poppy Seed Gravy)', veg: false, desc: 'Slow-simmered chicken in rich almond poppy seed sauce' },
+            { name: 'Mutton Rogan Josh Kashmiri', veg: false, desc: 'Tender lamb cooked in aromatic Kashmiri chilli & whole spices' },
+            { name: 'Butter Chicken Delicacy', veg: false, desc: 'Tandoori chicken shredded into satin tomato butter gravy' },
+            { name: 'Paneer Butter Masala (Rich Velvety Gravy)', veg: true, desc: 'Fresh paneer cubes in mildly sweet, spiced tomato gravy' },
+            { name: 'Dal Makhani (Overnight Simmered Black Lentils)', veg: true, desc: 'Slow cooked black urad dal with white butter & cream' }
+          ]
+        },
+        {
+          category: 'Artisanal Breads & Salan',
+          items: [
+            { name: 'Freshly Baked Rumali Roti', veg: true, desc: 'Paper-thin handkerchief bread tossed on inverted tawa' },
+            { name: 'Butter Tandoori Naan', veg: true, desc: 'Soft leavened bread brushed with melted desi butter' },
+            { name: 'Garlic Coriander Naan', veg: true, desc: 'Topped with roasted minced garlic & chopped cilantro' },
+            { name: 'Mirchi Ka Salan (Slow-Roasted Peanut Sesame Gravy)', veg: true, desc: 'Classic Hyderabadi chilli gravy with tamarind punch' },
+            { name: 'Dahi Ki Chutney with Pomegranate & Mint', veg: true, desc: 'Whipped fresh yogurt with onions & chopped herbs' }
+          ]
+        },
+        {
+          category: 'Signature Royal Desserts',
+          items: [
+            { name: 'Shahi Double Ka Meetha (Pure Ghee & Pistachio)', veg: true, desc: 'Crisp fried bread slices soaked in saffron milk & dry fruits' },
+            { name: 'Qubani Ka Meetha with Rich Malai Cream', veg: true, desc: 'Stewed Turkish apricots with apricot kernels and cream' },
+            { name: 'Hot Gulab Jamun with Rabdi', veg: true, desc: 'Warm golden milk dumplings topped with reduced saffron rabdi' },
+            { name: 'Traditional Zafrani Badam Phirni in Clay Pots', veg: true, desc: 'Ground rice pudding chilled in earthen terracotta pots' }
+          ]
+        }
+      ];
+
+      const toggleDish = (dishName) => {
+        if (selectedDishes.includes(dishName)) {
+          setSelectedDishes(selectedDishes.filter(d => d !== dishName));
+        } else {
+          setSelectedDishes([...selectedDishes, dishName]);
+        }
+      };
+
+      const handleNav = (page, category = 'veg') => {
         setActivePage(page);
+        if (page === 'menu') {
+          setMenuActiveCategory(category || 'veg');
+          setMenuActivePackage(category === 'non-veg' ? 'standard' : 'simple');
+          window.location.hash = category ? `menu?category=${category}` : 'menu';
+        } else {
+          window.location.hash = page === 'home' ? '' : page;
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      React.useEffect(() => {
+        const onHashChange = () => {
+          const hash = window.location.hash.replace(/^#\/?/, '');
+          if (!hash || hash === 'home') {
+            setActivePage('home');
+          } else if (hash.startsWith('menu')) {
+            setActivePage('menu');
+            if (hash.includes('category=non-veg')) {
+              setMenuActiveCategory('non-veg');
+              setMenuActivePackage('standard');
+            } else {
+              setMenuActiveCategory('veg');
+              setMenuActivePackage('simple');
+            }
+          } else if (hash.startsWith('about')) {
+            setActivePage('about');
+          } else if (hash.startsWith('custom') || hash.startsWith('services')) {
+            setActivePage('custom');
+          } else if (hash.startsWith('gallery')) {
+            setActivePage('gallery');
+          } else if (hash.startsWith('contact')) {
+            setActivePage('contact');
+          }
+        };
+
+        window.addEventListener('hashchange', onHashChange);
+        onHashChange();
+        return () => window.removeEventListener('hashchange', onHashChange);
+      }, []);
+
+      // Send Custom Menu to WhatsApp
+      const handleSendCuratorWhatsApp = () => {
+        if (selectedDishes.length === 0) {
+          alert('Please select at least one dish for your custom menu.');
+          return;
+        }
+
+        let grouped = '';
+        curatorDatabase.forEach(cat => {
+          const picked = cat.items.filter(item => selectedDishes.includes(item.name));
+          if (picked.length > 0) {
+            grouped += `%0A%0A*— ${cat.category.toUpperCase()} —*%0A`;
+            picked.forEach(item => {
+              grouped += `• ${encodeURIComponent(item.name)}%0A`;
+            });
+          }
+        });
+
+        const text = `*NASHWAN CATERINGS - CUSTOM MENU INQUIRY*%0A` +
+          `━━━━━━━━━━━━━━━━━━━━━━%0A` +
+          `👤 *Name:* ${encodeURIComponent(curatorDetails.name || 'Valued Client')}%0A` +
+          `📞 *Phone:* ${encodeURIComponent(curatorDetails.phone || 'Not provided')}%0A` +
+          `🎉 *Event:* ${encodeURIComponent(curatorDetails.eventType)}%0A` +
+          `👥 *Guests:* ${encodeURIComponent(curatorDetails.guests)}%0A` +
+          `📅 *Date:* ${encodeURIComponent(curatorDetails.date || 'TBD')}%0A` +
+          `🍽️ *Total Dishes Selected:* ${selectedDishes.length} items` +
+          `━━━━━━━━━━━━━━━━━━━━━━%0A` +
+          `📋 *CURATED DISH LIST:*` +
+          grouped +
+          `%0A━━━━━━━━━━━━━━━━━━━━━━%0A` +
+          `Please provide estimated pricing per plate and menu proposal.`;
+
+        window.open(`https://wa.me/919949390829?text=${text}`, '_blank');
+      };
+
+      // Send Menu Category to WhatsApp
+      const handleSendCategoryWhatsApp = (categoryName) => {
+        const text = `Hello Nashwan Caterings, I would like to inquire about your *${encodeURIComponent(categoryName)}* menu options and pricing.`;
+        window.open(`https://wa.me/919949390829?text=${text}`, '_blank');
       };
 
       const handleBookingSubmit = (e) => {
@@ -111,70 +449,51 @@
       };
 
       return (
-        <div className={`bg-[#080706] text-[#FDFBF7] flex flex-col relative ${activePage === 'home' ? 'h-screen w-screen overflow-hidden' : 'min-h-screen'}`}>
+        <div className="bg-[#080706] text-[#FDFBF7] flex flex-col relative min-h-screen">
           
-          {/* Universal Header Navigation - EXACT Screenshot */}
-          <header className="fixed top-0 left-0 right-0 z-50 py-3 sm:py-4 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-black/95 via-black/60 to-transparent">
+          {/* Universal Header Navigation - EXACT Reference Screenshot */}
+          <header className="fixed top-0 left-0 right-0 z-50 py-4 sm:py-5 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-[#011227]/90 via-[#01142B]/60 to-transparent">
             <div className="max-w-[1750px] mx-auto flex items-center justify-between">
               
-              {/* Left: Bigger Logo, Divider & Catering Direct Line with Phone Circle */}
-              <div className="flex items-center gap-4 sm:gap-6">
-                <button onClick={() => handleNav('home')} className="flex items-center shrink-0">
+              {/* Left Section: Cyan & White Nashwan Logo */}
+              <div className="flex items-center">
+                <button onClick={() => handleNav('home')} className="flex items-center shrink-0 text-left">
                   <img 
                     src="assets/logo.png" 
+                    onError={(e) => { e.target.src = 'assets/logo.png' }}
                     alt="Nashwan Catering Services" 
-                    className="h-14 sm:h-16 md:h-20 lg:h-22 w-auto object-contain drop-shadow-[0_4px_16px_rgba(212,175,55,0.3)] transition-transform hover:scale-105 duration-300"
+                    className="h-12 sm:h-14 md:h-16 lg:h-18 w-auto object-contain transition-transform hover:scale-105 duration-300"
                   />
                 </button>
-
-                {/* Vertical Divider */}
-                <div className="hidden md:block h-10 w-[1px] bg-[#8C6D37]/50" />
-
-                {/* Catering Direct Line with Phone Circle */}
-                <div className="hidden md:flex items-center gap-3">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#D4AF37]/50 bg-[#D4AF37]/10 flex items-center justify-center shrink-0">
-                    <svg className="w-4 h-4 text-[#E5A947]" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] tracking-wider text-[#D4AF37] uppercase font-bold leading-tight">
-                      CATERING DIRECT LINE
-                    </span>
-                    <div className="flex items-center gap-1.5 text-white font-medium text-sm sm:text-[15px] tracking-wide leading-tight mt-0.5">
-                      <a href="tel:9492247495" className="hover:text-[#E5A947] transition-colors">9492247495</a>
-                      <span className="text-[#D4AF37] text-xs leading-none">•</span>
-                      <a href="tel:9949390829" className="hover:text-[#E5A947] transition-colors">9949390829</a>
-                    </div>
-                  </div>
-                </div>
               </div>
 
-              {/* Center Navigation Links */}
-              <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 text-sm font-normal">
+              {/* Center Navigation Links (Matching Reference Uppercase Layout) */}
+              <nav className="hidden lg:flex items-center space-x-7 xl:space-x-9 text-xs sm:text-[13px] tracking-wider uppercase font-medium">
                 <button 
                   onClick={() => handleNav('home')}
-                  className={`transition-colors pb-1 ${activePage === 'home' ? 'text-white font-medium border-b-2 border-[#D4AF37]' : 'text-neutral-200 hover:text-[#D4AF37]'}`}
+                  className={`transition-colors ${activePage === 'home' ? 'text-[#ECC870] font-bold' : 'text-white/85 hover:text-white'}`}
                 >
-                  Home
+                  HOME
                 </button>
                 <button 
                   onClick={() => handleNav('about')}
-                  className={`transition-colors pb-1 ${activePage === 'about' ? 'text-white font-medium border-b-2 border-[#D4AF37]' : 'text-neutral-200 hover:text-[#D4AF37]'}`}
+                  className={`transition-colors ${activePage === 'about' ? 'text-[#ECC870] font-bold' : 'text-white/85 hover:text-white'}`}
                 >
-                  About
+                  ABOUT
                 </button>
 
                 <div className="relative" onMouseEnter={() => setServicesDropdown(true)} onMouseLeave={() => setServicesDropdown(false)}>
-                  <button onClick={() => handleNav('custom')} className="text-neutral-200 hover:text-[#D4AF37] transition-colors flex items-center gap-1">
-                    <span>Services</span>
-                    <svg className="w-3.5 h-3.5 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
+                  <button onClick={() => handleNav('custom')} className="text-white/85 hover:text-white transition-colors flex items-center gap-1.5 uppercase font-medium">
+                    <span>SERVICES</span>
+                    <svg className="w-3.5 h-3.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
                   </button>
                   {servicesDropdown && (
-                    <div className="absolute top-full left-0 mt-2 w-72 bg-[#0D0B09]/95 backdrop-blur-xl border border-[#D4AF37]/40 rounded-xl shadow-2xl py-2 z-50">
-                      <button onClick={() => { setServicesDropdown(false); handleNav('custom'); }} className="w-full text-left px-4 py-2 hover:bg-[#D4AF37]/15 block">
+                    <div className="absolute top-full left-0 mt-2 w-72 bg-[#08182E]/95 backdrop-blur-xl border border-[#ECC870]/40 rounded-xl shadow-2xl py-2 z-50">
+                      <button onClick={() => { setServicesDropdown(false); handleNav('custom'); }} className="w-full text-left px-4 py-2 hover:bg-[#ECC870]/15 block">
                         <div className="text-xs font-semibold text-white">Royal Wedding Banquets</div>
                         <div className="text-[10px] text-neutral-400">Regal dining setups with silver service</div>
                       </button>
-                      <button onClick={() => { setServicesDropdown(false); handleNav('custom'); }} className="w-full text-left px-4 py-2 hover:bg-[#D4AF37]/15 block">
+                      <button onClick={() => { setServicesDropdown(false); handleNav('custom'); }} className="w-full text-left px-4 py-2 hover:bg-[#ECC870]/15 block">
                         <div className="text-xs font-semibold text-white">Corporate Galas & Summits</div>
                         <div className="text-[10px] text-neutral-400">Refined buffets & executive protocol</div>
                       </button>
@@ -184,41 +503,40 @@
 
                 <button 
                   onClick={() => handleNav('menu')}
-                  className={`transition-colors pb-1 ${activePage === 'menu' ? 'text-white font-medium border-b-2 border-[#D4AF37]' : 'text-neutral-200 hover:text-[#D4AF37]'}`}
+                  className={`transition-colors ${activePage === 'menu' ? 'text-[#ECC870] font-bold' : 'text-white/85 hover:text-white'}`}
                 >
-                  Menu
+                  MENU
                 </button>
                 <button 
                   onClick={() => handleNav('custom')}
-                  className={`transition-colors pb-1 ${activePage === 'custom' ? 'text-white font-medium border-b-2 border-[#D4AF37]' : 'text-neutral-200 hover:text-[#D4AF37]'}`}
+                  className={`transition-colors ${activePage === 'custom' ? 'text-[#ECC870] font-bold' : 'text-white/85 hover:text-white'}`}
                 >
-                  Custom Menu
+                  CUSTOM MENU
                 </button>
                 <button 
                   onClick={() => handleNav('gallery')}
-                  className={`transition-colors pb-1 ${activePage === 'gallery' ? 'text-white font-medium border-b-2 border-[#D4AF37]' : 'text-neutral-200 hover:text-[#D4AF37]'}`}
+                  className={`transition-colors ${activePage === 'gallery' ? 'text-[#ECC870] font-bold' : 'text-white/85 hover:text-white'}`}
                 >
-                  Gallery
+                  GALLERY
                 </button>
                 <button 
                   onClick={() => handleNav('contact')}
-                  className={`transition-colors pb-1 ${activePage === 'contact' ? 'text-white font-medium border-b-2 border-[#D4AF37]' : 'text-neutral-200 hover:text-[#D4AF37]'}`}
+                  className={`transition-colors ${activePage === 'contact' ? 'text-[#ECC870] font-bold' : 'text-white/85 hover:text-white'}`}
                 >
-                  Contact
+                  CONTACT
                 </button>
               </nav>
 
-              {/* Right: Pill-Shaped "BOOK NOW" Button */}
+              {/* Right: Gold Outlined Rectangular "BOOK NOW" Button */}
               <div className="flex items-center gap-3">
                 <button 
                   onClick={() => setBookingOpen(true)}
-                  className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] shadow-[0_4px_20px_rgba(237,168,61,0.4)] hover:shadow-[0_6px_28px_rgba(237,168,61,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  className="inline-flex items-center justify-center px-7 sm:px-8 py-2.5 sm:py-3 rounded-[2px] text-xs font-semibold uppercase tracking-[0.2em] text-[#ECC870] hover:text-white bg-[#01142B]/70 hover:bg-[#ECC870]/20 border border-[#ECC870]/80 hover:border-[#ECC870] transition-all duration-200"
                 >
-                  <svg className="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                   <span>BOOK NOW</span>
                 </button>
 
-                <button onClick={() => setMobileMenu(!mobileMenu)} className="p-2 rounded-lg border border-[#8C6D37]/40 text-[#E5A947] lg:hidden">
+                <button onClick={() => setMobileMenu(!mobileMenu)} className="p-2 rounded-lg border border-[#ECC870]/40 text-[#ECC870] lg:hidden">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
                 </button>
               </div>
@@ -226,325 +544,1140 @@
             </div>
           </header>
 
-          {/* ==================== 1. HOME PAGE (STRICTLY UNTOUCHED) ==================== */}
+          {/* ==================== 1. HOME PAGE ==================== */}
           {activePage === 'home' && (
-            <main className="relative flex-1 h-full w-full flex flex-col justify-between overflow-hidden bg-[#080706]">
-              {/* Background Image Container */}
-              <div 
-                className="absolute inset-0 bg-cover bg-no-repeat z-0"
-                style={{ 
-                  backgroundImage: "url('assets/hero-bg.jpg')",
-                  backgroundPosition: 'right 25% center'
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#070605] via-[#080706]/90 sm:via-[#080706]/80 md:via-[#080706]/65 to-transparent lg:w-[70%]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#080706]/70 via-transparent to-black/40" />
-              </div>
+            <div>
+              {/* Top Hero Section (Matching Reference Composition) */}
+              <section className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden bg-[#01142B]">
+                <div 
+                  className="absolute inset-0 bg-cover bg-no-repeat z-0"
+                  style={{ 
+                    backgroundImage: "url('assets/hero-bg.jpg')",
+                    backgroundPosition: 'right 20% center'
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#011227] via-[#01142B]/90 sm:via-[#01142B]/80 md:via-[#01142B]/60 to-transparent lg:w-[68%]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#011227]/80 via-transparent to-transparent" />
+                </div>
 
-              {/* Content Container (Fixed Screen Height) */}
-              <div className="relative z-10 max-w-[1700px] mx-auto w-full px-4 sm:px-8 lg:px-12 pt-26 sm:pt-30 md:pt-34 pb-8 sm:pb-10 flex-1 flex flex-col justify-between h-full min-h-0">
-                <div className="max-w-2xl lg:max-w-3xl flex-1 flex flex-col justify-center">
+                <div className="relative z-10 max-w-[1700px] mx-auto w-full px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 md:pt-36 pb-10 sm:pb-12 flex-1 flex flex-col justify-between h-full min-h-0">
+                  <div className="max-w-2xl lg:max-w-3xl flex-1 flex flex-col justify-center">
+                    
+                    <div className="flex items-center gap-3 mb-4 sm:mb-5">
+                      <span className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-[#ECC870]">
+                        PREMIUM CATERING SERVICES
+                      </span>
+                      <span className="w-12 h-[1px] bg-[#ECC870]/70 inline-block" />
+                    </div>
+
+                    <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-normal tracking-tight leading-[1.12] mb-5 sm:mb-6">
+                      <span className="text-white block font-serif">
+                        The Taste of Hyderabad,
+                      </span>
+                      <span className="text-white block font-serif">
+                        Crafted for Your Celebration.
+                      </span>
+                    </h1>
+
+                    <p className="text-neutral-300 text-sm sm:text-base md:text-[17px] font-normal leading-relaxed max-w-xl mb-8 font-sans">
+                      Authentic flavours, traditional recipes and heartfelt hospitality for weddings, family gatherings, birthdays and corporate events.
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-4 sm:gap-5 mb-10">
+                      <button 
+                        onClick={() => handleNav('menu')}
+                        className="px-8 py-3.5 rounded-[2px] text-xs sm:text-[13px] font-semibold text-[#0B1E38] bg-[#ECC870] hover:bg-[#F3D68A] shadow-[0_4px_20px_rgba(236,200,112,0.3)] hover:scale-[1.02] active:scale-[0.98] uppercase tracking-[0.18em] transition-all duration-200"
+                      >
+                        <span>EXPLORE OUR MENU</span>
+                      </button>
+
+                      <button 
+                        onClick={() => setBookingOpen(true)}
+                        className="px-8 py-3.5 rounded-[2px] text-xs sm:text-[13px] font-semibold text-white bg-[#0B1E38]/60 hover:bg-[#ECC870]/10 border border-[#ECC870]/80 hover:border-[#ECC870] uppercase tracking-[0.18em] transition-all duration-200"
+                      >
+                        <span>PLAN YOUR CELEBRATION</span>
+                      </button>
+                    </div>
+
+                    {/* Bottom Left Statistics Badge: SINCE 2023 • 300+ CLIENTS SERVED */}
+                    <div className="pt-2">
+                      <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-[2px] border border-[#ECC870]/40 bg-[#0B1E38]/60 backdrop-blur-md shadow-lg">
+                        <span className="text-xs sm:text-[13px] font-semibold tracking-[0.22em] text-[#ECC870] uppercase">
+                          SINCE 2023 • 300+ CLIENTS SERVED
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </section>
+
+              {/* =========================================================================
+                  SECTION 1: WHAT ARE YOU CELEBRATING? (EXACT Image 1 Top)
+                  Ivory luxury background with gold filigree, white cards, gold borders
+              ========================================================================= */}
+              <section className="relative w-full pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-8 lg:px-12 bg-[#FAF8F5] overflow-hidden">
+                
+                {/* Delicate Gold Botanical Leaf Filigree Watermarks */}
+                <div className="absolute top-0 left-0 w-48 sm:w-64 h-48 sm:h-64 opacity-20 pointer-events-none z-0">
+                  <svg viewBox="0 0 100 100" fill="none" stroke="#ECC870" strokeWidth="0.8">
+                    <path d="M5 95 Q 30 20, 80 5" />
+                    <path d="M30 45 Q 45 30, 65 35" />
+                    <path d="M45 30 Q 55 15, 75 20" />
+                    <circle cx="65" cy="35" r="2" fill="#ECC870" />
+                    <circle cx="75" cy="20" r="2" fill="#ECC870" />
+                  </svg>
+                </div>
+                <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 opacity-20 pointer-events-none z-0 scale-x-[-1]">
+                  <svg viewBox="0 0 100 100" fill="none" stroke="#ECC870" strokeWidth="0.8">
+                    <path d="M5 95 Q 30 20, 80 5" />
+                    <path d="M30 45 Q 45 30, 65 35" />
+                    <path d="M45 30 Q 55 15, 75 20" />
+                    <circle cx="65" cy="35" r="2" fill="#ECC870" />
+                    <circle cx="75" cy="20" r="2" fill="#ECC870" />
+                  </svg>
+                </div>
+
+                <div className="relative z-10 max-w-[1700px] mx-auto w-full">
                   
-                  {/* Eyebrow */}
-                  <div className="flex items-center gap-3 mb-4 sm:mb-5">
-                    <span className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#D2C8B8]">
-                      PREMIUM CATERING SERVICES
-                    </span>
-                    <span className="w-10 sm:w-12 h-[1px] bg-[#8C6D37]/70 inline-block" />
+                  {/* Header Section Matching Image 1 */}
+                  <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-12">
+                    
+                    {/* Main Heading with Gold Horizontal Lines: — What are you celebrating? — */}
+                    <div className="flex items-center justify-center gap-4 sm:gap-6">
+                      <span className="w-16 sm:w-28 md:w-36 h-[1.5px] bg-[#ECC870] inline-block" />
+                      <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-normal tracking-tight text-[#0B1E38] whitespace-nowrap">
+                        What are you <span className="italic text-[#2BA4EE] font-serif font-normal">celebrating?</span>
+                      </h2>
+                      <span className="w-16 sm:w-28 md:w-36 h-[1.5px] bg-[#ECC870] inline-block" />
+                    </div>
+
+                    {/* Subtitle */}
+                    <p className="text-neutral-600 font-sans text-sm sm:text-base md:text-[17px] font-normal leading-relaxed mt-2.5 sm:mt-3">
+                      Pick your occasion — we’ll recommend the right menus instantly.
+                    </p>
+
                   </div>
 
-                  {/* Main Heading */}
-                  <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-normal tracking-tight leading-[1.12] mb-4 sm:mb-5">
-                    <span className="text-white block font-serif">
-                      The Taste of Hyderabad,
-                    </span>
-                    <span className="italic text-[#E5A947] block font-serif font-normal">
-                      Crafted for Your Celebration
-                    </span>
-                  </h1>
+                  {/* 6 Occasion Cards Grid on White Cards with Gold Border */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 lg:gap-5">
+                    {[
+                      {
+                        id: 'wedding',
+                        name: 'Wedding',
+                        image: 'assets/occasions/wedding.jpg',
+                        icon: (
+                          <svg className="w-5 h-5 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                            <circle cx="9" cy="12" r="5" stroke="currentColor" />
+                            <circle cx="15" cy="12" r="5" stroke="currentColor" />
+                            <path d="M12 9.5a2 2 0 0 1 0-3 2 2 0 0 1 0 3z" fill="#ECC870" stroke="none" />
+                          </svg>
+                        )
+                      },
+                      {
+                        id: 'birthday',
+                        name: 'Birthday',
+                        image: 'assets/occasions/birthday.jpg',
+                        icon: (
+                          <svg className="w-5 h-5 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                            <path d="M4 14h16v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6z" />
+                            <path d="M4 14c1.5 1 2.5 1 4 0s2.5-1 4 0 2.5 1 4 0 2.5-1 4 0" />
+                            <line x1="8" y1="10" x2="8" y2="14" />
+                            <line x1="12" y1="10" x2="12" y2="14" />
+                            <line x1="16" y1="10" x2="16" y2="14" />
+                            <circle cx="8" cy="8" r="1" fill="#ECC870" stroke="none" />
+                            <circle cx="12" cy="8" r="1" fill="#ECC870" stroke="none" />
+                            <circle cx="16" cy="8" r="1" fill="#ECC870" stroke="none" />
+                          </svg>
+                        )
+                      },
+                      {
+                        id: 'corporate',
+                        name: 'Corporate',
+                        image: 'assets/occasions/corporate.jpg',
+                        icon: (
+                          <svg className="w-5 h-5 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                            <rect x="7" y="4" width="10" height="17" rx="1" />
+                            <rect x="3" y="10" width="4" height="11" rx="0.5" />
+                            <rect x="17" y="10" width="4" height="11" rx="0.5" />
+                            <line x1="10" y1="8" x2="10" y2="8.01" strokeWidth="2" strokeLinecap="round" />
+                            <line x1="14" y1="8" x2="14" y2="8.01" strokeWidth="2" strokeLinecap="round" />
+                            <line x1="10" y1="12" x2="10" y2="12.01" strokeWidth="2" strokeLinecap="round" />
+                            <line x1="14" y1="12" x2="14" y2="12.01" strokeWidth="2" strokeLinecap="round" />
+                            <line x1="10" y1="16" x2="10" y2="16.01" strokeWidth="2" strokeLinecap="round" />
+                            <line x1="14" y1="16" x2="14" y2="16.01" strokeWidth="2" strokeLinecap="round" />
+                          </svg>
+                        )
+                      },
+                      {
+                        id: 'anniversary',
+                        name: 'Anniversary',
+                        image: 'assets/occasions/anniversary.jpg',
+                        icon: (
+                          <svg className="w-5 h-5 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                          </svg>
+                        )
+                      },
+                      {
+                        id: 'house_party',
+                        name: 'House Party',
+                        image: 'assets/occasions/house_party.jpg',
+                        icon: (
+                          <svg className="w-5 h-5 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                          </svg>
+                        )
+                      },
+                      {
+                        id: 'reception',
+                        name: 'Reception',
+                        image: 'assets/occasions/reception.jpg',
+                        icon: (
+                          <svg className="w-5 h-5 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                          </svg>
+                        )
+                      }
+                    ].map((occ) => (
+                      <div 
+                        key={occ.id}
+                        onClick={() => handleNav('custom')}
+                        className="group relative rounded-[16px] sm:rounded-[18px] overflow-hidden bg-white border border-[#ECC870] hover:border-[#D4AF37] cursor-pointer transition-all duration-300 flex flex-col justify-between shadow-[0_4px_18px_rgba(0,0,0,0.06)] hover:-translate-y-1.5 hover:shadow-[0_12px_28px_rgba(236,200,112,0.3)]"
+                      >
+                        <div className="relative w-full h-36 sm:h-40 md:h-44 overflow-hidden bg-[#F3EFEA]">
+                          <img 
+                            src={occ.image} 
+                            alt={occ.name}
+                            className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out" 
+                          />
+                        </div>
 
-                  {/* Description */}
-                  <p className="text-neutral-300 text-sm sm:text-base md:text-[17px] font-normal leading-relaxed max-w-xl mb-7 sm:mb-8 font-sans">
-                    Authentic flavours, traditional recipes and heartfelt hospitality for weddings, family gatherings, birthdays and corporate events.
-                  </p>
+                        <div className="relative z-10 flex flex-col items-center -mt-5 sm:-mt-6">
+                          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#ECC870] bg-[#041A3B] flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-110">
+                            {occ.icon}
+                          </div>
 
-                  {/* Buttons */}
-                  <div className="flex flex-wrap items-center gap-4 sm:gap-5">
-                    <button 
-                      onClick={() => handleNav('menu')}
-                      className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-semibold text-black bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] shadow-[0_4px_20px_rgba(237,168,61,0.35)] hover:shadow-[0_6px_25px_rgba(237,168,61,0.55)] hover:scale-[1.02] active:scale-[0.98] transition-all"
-                    >
-                      <svg className="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-                      <span>Explore Our Menu</span>
-                    </button>
-
-                    <button 
-                      onClick={() => setBookingOpen(true)}
-                      className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-medium text-white bg-black/40 hover:bg-[#EDA83D]/10 border border-[#8C6D37]/80 hover:border-[#E5A947] backdrop-blur-md transition-all"
-                    >
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                      <span>Plan Your Celebration</span>
-                    </button>
+                          <div className="pt-2 sm:pt-2.5 pb-4 px-2 text-center w-full">
+                            <h3 className="font-serif text-[#0B1E38] text-sm sm:text-base font-semibold tracking-wide group-hover:text-[#2BA4EE] transition-colors">
+                              {occ.name}
+                            </h3>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
+
                 </div>
 
-                {/* Bottom Left Stats */}
-                <div className="w-full max-w-xl pt-4">
-                  <div className="rounded-2xl border border-[#8C6D37]/40 bg-[#120F0D]/60 backdrop-blur-md px-5 sm:px-6 py-3.5 sm:py-4 shadow-[0_12px_36px_rgba(0,0,0,0.6)]">
-                    <div className="grid grid-cols-3 divide-x divide-[#8C6D37]/30 items-center">
-                      <div className="flex items-center gap-2.5 sm:gap-3.5 pr-3 sm:pr-4">
-                        <svg className="w-6 h-6 sm:w-7 sm:h-7 text-[#E5A947]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        <div className="flex flex-col">
-                          <span className="text-[11px] sm:text-xs text-neutral-400">Since</span>
-                          <span className="text-xl sm:text-2xl font-bold text-white">2023</span>
+              </section>
+
+              {/* =========================================================================
+                  SECTION 1.5: OUR CURATED MENU PRICING
+                  Transparently priced vegetarian and non-vegetarian menus
+              ========================================================================= */}
+              <section className="relative w-full py-12 sm:py-16 px-4 sm:px-8 lg:px-12 bg-[#FAF8F5] overflow-hidden">
+                <div className="max-w-5xl mx-auto w-full">
+                  {/* Section Header */}
+                  <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+                    <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#0B1E38] mb-3">
+                      Our Curated Menu Pricing
+                    </h2>
+                    <p className="font-lato text-neutral-600 text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">
+                      Select from our transparently priced vegetarian and non-vegetarian menus, designed for celebrations of all types.
+                    </p>
+                  </div>
+
+                  {/* Pricing Cards Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                    
+                    {/* Card 1: Pure Veg Menu */}
+                    <div className="rounded-[18px] sm:rounded-[22px] bg-[#0A331B] border border-emerald-500/25 p-6 sm:p-8 flex flex-col justify-between shadow-[0_12px_36px_rgba(10,51,27,0.25)] text-white relative overflow-hidden group hover:border-emerald-500/40 transition-all duration-300">
+                      <div>
+                        {/* Leaf Icon Box */}
+                        <div className="w-11 h-11 rounded-[10px] bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center mb-5 shadow-inner">
+                          <svg className="w-5 h-5 text-[#22C55E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                          </svg>
+                        </div>
+                        <span className="font-montserrat text-xs sm:text-[13px] font-medium tracking-[0.2em] uppercase text-[#22C55E] block mb-2">
+                          PURE VEG MENU
+                        </span>
+                        <div className="flex items-baseline gap-2 mb-3">
+                          <span className="font-cormorant text-4xl sm:text-5xl font-normal text-white tracking-tight">
+                            ₹225
+                          </span>
+                          <span className="font-lato text-xs sm:text-sm text-neutral-300 font-normal">
+                            /plate starting
+                          </span>
+                        </div>
+                        <p className="font-lato text-neutral-200 text-xs sm:text-sm font-normal leading-relaxed mb-6">
+                          Wholesome vegetarian feasts with authentic Hyderabadi & Telangana flavours.
+                        </p>
+                        <div className="space-y-3 pt-4 border-t border-emerald-500/20 mb-8">
+                          <div className="flex items-center justify-between py-1 text-xs sm:text-sm">
+                            <span className="font-lato text-neutral-200 font-normal">Traditional Menu</span>
+                            <span className="font-montserrat font-medium text-white tracking-wide">₹225 / plate</span>
+                          </div>
+                          <div className="flex items-center justify-between py-1 text-xs sm:text-sm">
+                            <span className="font-lato text-neutral-200 font-normal">Basic Menu</span>
+                            <span className="font-montserrat font-medium text-white tracking-wide">₹245 / plate</span>
+                          </div>
+                          <div className="flex items-center justify-between py-1 text-xs sm:text-sm">
+                            <span className="font-lato text-neutral-200 font-normal">Standard Menu</span>
+                            <span className="font-montserrat font-medium text-white tracking-wide">₹295 / plate</span>
+                          </div>
+                          <div className="flex items-center justify-between py-1 text-xs sm:text-sm">
+                            <span className="font-lato text-emerald-300 font-medium">Special Menu 👑</span>
+                            <span className="font-montserrat font-medium text-white tracking-wide">₹345 / plate</span>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2.5 sm:gap-3.5 px-3 sm:px-4">
-                        <svg className="w-6 h-6 sm:w-7 sm:h-7 text-[#E5A947]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                        <div className="flex flex-col">
-                          <span className="text-xl sm:text-2xl font-bold text-white">300+</span>
-                          <span className="text-[11px] sm:text-xs text-neutral-400">Clients Served</span>
+                      <button 
+                        onClick={() => handleNav('menu', 'veg')}
+                        className="w-full py-3.5 px-6 rounded-[2px] bg-white hover:bg-neutral-100 text-[#0A331B] font-montserrat font-medium text-xs uppercase tracking-[0.16em] shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                      >
+                        <span>VIEW VEG PACKAGES</span>
+                        <span>→</span>
+                      </button>
+                    </div>
+
+                    {/* Card 2: Non-Veg Menu */}
+                    <div className="rounded-[18px] sm:rounded-[22px] bg-[#3B0C13] border border-rose-500/25 p-6 sm:p-8 flex flex-col justify-between shadow-[0_12px_36px_rgba(59,12,19,0.25)] text-white relative overflow-hidden group hover:border-rose-500/40 transition-all duration-300">
+                      <div>
+                        {/* Flame Icon Box */}
+                        <div className="w-11 h-11 rounded-[10px] bg-rose-950/80 border border-rose-500/40 flex items-center justify-center mb-5 shadow-inner">
+                          <svg className="w-5 h-5 text-[#F87171]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"/>
+                          </svg>
+                        </div>
+                        <span className="font-montserrat text-xs sm:text-[13px] font-medium tracking-[0.2em] uppercase text-[#F87171] block mb-2">
+                          NON-VEG MENU
+                        </span>
+                        <div className="flex items-baseline gap-2 mb-3">
+                          <span className="font-cormorant text-4xl sm:text-5xl font-normal text-white tracking-tight">
+                            ₹345
+                          </span>
+                          <span className="font-lato text-xs sm:text-sm text-neutral-300 font-normal">
+                            /plate starting
+                          </span>
+                        </div>
+                        <p className="font-lato text-neutral-200 text-xs sm:text-sm font-normal leading-relaxed mb-6">
+                          Dum biryanis, kebabs from the sigri and signature Deccan delicacies.
+                        </p>
+                        <div className="space-y-3 pt-4 border-t border-rose-500/20 mb-8">
+                          <div className="flex items-center justify-between py-1 text-xs sm:text-sm">
+                            <span className="font-lato text-neutral-200 font-normal">Traditional Menu</span>
+                            <span className="font-montserrat font-medium text-white tracking-wide">₹345 / plate</span>
+                          </div>
+                          <div className="flex items-center justify-between py-1 text-xs sm:text-sm">
+                            <span className="font-lato text-neutral-200 font-normal">Basic Menu</span>
+                            <span className="font-montserrat font-medium text-white tracking-wide">₹395 / plate</span>
+                          </div>
+                          <div className="flex items-center justify-between py-1 text-xs sm:text-sm">
+                            <span className="font-lato text-neutral-200 font-normal">Standard Menu</span>
+                            <span className="font-montserrat font-medium text-white tracking-wide">₹495 / plate</span>
+                          </div>
+                          <div className="flex items-center justify-between py-1 text-xs sm:text-sm">
+                            <span className="font-lato text-rose-300 font-medium">Special Menu 👑</span>
+                            <span className="font-montserrat font-medium text-white tracking-wide">₹595 / plate</span>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2.5 sm:gap-3.5 pl-3 sm:pl-4">
-                        <svg className="w-6 h-6 sm:w-7 sm:h-7 text-[#E5A947]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-                        <div className="flex flex-col">
-                          <span className="text-xl sm:text-2xl font-bold text-white">3+</span>
-                          <span className="text-[11px] sm:text-xs text-neutral-400">Years of Hospitality</span>
+                      <button 
+                        onClick={() => handleNav('menu', 'non-veg')}
+                        className="w-full py-3.5 px-6 rounded-[2px] bg-white hover:bg-neutral-100 text-[#3B0C13] font-montserrat font-medium text-xs uppercase tracking-[0.16em] shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                      >
+                        <span>VIEW NON-VEG PACKAGES</span>
+                        <span>→</span>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </section>
+
+              {/* =========================================================================
+                  SECTION 2: WHY CHOOSE NASHWAN CATERINGS? (EXACT Image 1 Bottom)
+                  Featuring curved gold wave trim, steaming Biryani Handi, 4 pillars, Charminar
+              ========================================================================= */}
+              <section className="relative w-full bg-[#01142B] text-white overflow-hidden">
+                
+                {/* Curved Golden Ribbon Wave Divider at Top - Sleek S-Curve */}
+                <div className="w-full overflow-hidden leading-none -mt-1 relative z-10">
+                  <svg className="w-full h-8 sm:h-10 md:h-12 block" viewBox="0 0 1440 90" fill="none" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="goldRibbonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#DCA942" />
+                        <stop offset="20%" stopColor="#F7DF94" />
+                        <stop offset="45%" stopColor="#C99B35" />
+                        <stop offset="70%" stopColor="#FAE6A2" />
+                        <stop offset="85%" stopColor="#F3D37D" />
+                        <stop offset="100%" stopColor="#D4A43D" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M 0,0 L 1440,0 L 1440,18 C 1100,8 800,10 520,52 C 300,85 160,85 0,45 Z" fill="#FAF8F5" />
+                    <path d="M 0,45 C 160,85 300,85 520,52 C 800,10 1100,8 1440,18 L 1440,90 L 0,90 Z" fill="#01142B" />
+                    <path d="M 0,45 C 160,85 300,85 520,52 C 800,10 1100,8 1440,18" stroke="url(#goldRibbonGradient)" strokeWidth="4" fill="none" />
+                  </svg>
+                </div>
+
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-8 sm:pb-10 relative">
+                  
+                  {/* Main Title: Why Choose Nashwan Caterings? */}
+                  <div className="text-center mb-6 sm:mb-8">
+                    <h2 className="font-cormorant text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-medium tracking-tight">
+                      Why Choose <span className="font-cormorant italic text-[#ECC870]">Nashwan Caterings?</span>
+                    </h2>
+                  </div>
+
+                  {/* Section Content: Left Handi + 4 Feature Columns + Right Charminar - Tight & Balanced */}
+                  <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8 xl:gap-10">
+                    
+                    {/* Left: Steaming Biryani Copper Handi */}
+                    <div className="shrink-0 flex justify-center">
+                      <img 
+                        src="assets/home/biryani_handi.jpg" 
+                        alt="Hyderabadi Dum Biryani" 
+                        className="w-56 sm:w-64 md:w-72 lg:w-[280px] xl:w-[320px] max-w-full h-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)] transition-transform duration-500 hover:scale-[1.03]"
+                      />
+                    </div>
+
+                    {/* Center: 4 Feature Pillars with Gold Circles & Separator Lines */}
+                    <div className="w-full lg:flex-1 max-w-2xl grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#ECC870]/25 gap-y-4 sm:gap-y-0 py-1">
+                      {[
+                        {
+                          title: 'Authentic Taste',
+                          desc: 'Traditional & premium recipes',
+                          icon: (
+                            <svg className="w-6 h-6 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                              <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z" />
+                              <line x1="6" y1="17" x2="18" y2="17" />
+                            </svg>
+                          )
+                        },
+                        {
+                          title: 'Custom Menus',
+                          desc: 'Tailored for every occasion',
+                          icon: (
+                            <svg className="w-6 h-6 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                              <path d="M6 3h12l4 6-10 12L2 9z" />
+                              <path d="M2 9h20M10 3l-2 6 4 12 4-12-2-6" />
+                            </svg>
+                          )
+                        },
+                        {
+                          title: 'Professional Service',
+                          desc: 'Experienced & courteous team',
+                          icon: (
+                            <svg className="w-6 h-6 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                              <circle cx="9" cy="7" r="4" />
+                              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                          )
+                        },
+                        {
+                          title: 'Hygienic & Reliable',
+                          desc: 'Quality, safety and on-time service',
+                          icon: (
+                            <svg className="w-6 h-6 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                              <path d="m9 12 2 2 4-4" />
+                            </svg>
+                          )
+                        }
+                      ].map((pillar, idx) => (
+                        <div key={idx} className="flex flex-col items-center text-center px-2 sm:px-3 pt-3 sm:pt-0">
+                          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-[#ECC870] bg-[#0B1E38] flex items-center justify-center mb-2 shadow-md">
+                            {pillar.icon}
+                          </div>
+                          <h3 className="font-cormorant text-white text-sm sm:text-base font-medium mb-1 tracking-tight">
+                            {pillar.title}
+                          </h3>
+                          <p className="font-lato text-neutral-300 text-[11px] sm:text-xs font-normal leading-snug max-w-[130px]">
+                            {pillar.desc}
+                          </p>
                         </div>
+                      ))}
+                    </div>
+
+                    {/* Right: Iconic Charminar Gold Line-Art Illustration */}
+                    <div className="shrink-0 hidden lg:flex justify-center">
+                      <img 
+                        src="assets/home/charminar_gold.jpg" 
+                        alt="Charminar Heritage" 
+                        className="w-20 xl:w-24 h-auto object-contain opacity-85 drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)]"
+                      />
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </section>
+
+              {/* =========================================================================
+                  SECTION 3: COMPLETE CATERING SOLUTIONS (EXACT Image 2 Top)
+                  Ivory background with gold floral filigree watermarks, 4 service cards
+              ========================================================================= */}
+              <section className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-12 bg-[#FAF8F5] overflow-hidden">
+                
+                {/* Delicate Gold Watermark Illustrations */}
+                <div className="absolute top-0 left-0 w-52 sm:w-72 h-52 sm:h-72 opacity-20 pointer-events-none z-0">
+                  <svg viewBox="0 0 100 100" fill="none" stroke="#ECC870" strokeWidth="0.8">
+                    <path d="M5 95 Q 30 20, 80 5" />
+                    <path d="M30 45 Q 45 30, 65 35" />
+                    <path d="M45 30 Q 55 15, 75 20" />
+                    <circle cx="65" cy="35" r="2" fill="#ECC870" />
+                    <circle cx="75" cy="20" r="2" fill="#ECC870" />
+                  </svg>
+                </div>
+                <div className="absolute top-0 right-0 w-52 sm:w-72 h-52 sm:h-72 opacity-20 pointer-events-none z-0 scale-x-[-1]">
+                  <svg viewBox="0 0 100 100" fill="none" stroke="#ECC870" strokeWidth="0.8">
+                    <path d="M5 95 Q 30 20, 80 5" />
+                    <path d="M30 45 Q 45 30, 65 35" />
+                    <path d="M45 30 Q 55 15, 75 20" />
+                    <circle cx="65" cy="35" r="2" fill="#ECC870" />
+                    <circle cx="75" cy="20" r="2" fill="#ECC870" />
+                  </svg>
+                </div>
+
+                <div className="relative z-10 max-w-[1700px] mx-auto w-full">
+                  
+                  {/* Header */}
+                  <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
+                    
+                    {/* Eyebrow: — OUR SPECIALIZED SERVICES — */}
+                    <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                      <span className="w-12 sm:w-20 md:w-24 h-[1px] bg-[#ECC870]/80 inline-block" />
+                      <span className="text-[11px] sm:text-xs font-semibold tracking-[0.28em] uppercase text-[#ECC870]">
+                        OUR SPECIALIZED SERVICES
+                      </span>
+                      <span className="w-12 sm:w-20 md:w-24 h-[1px] bg-[#ECC870]/80 inline-block" />
+                    </div>
+
+                    {/* Main Heading: Complete Catering Solutions for Every Occasion */}
+                    <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-normal tracking-tight text-[#0B1E38] leading-[1.18]">
+                      Complete Catering Solutions <br />
+                      <span className="font-serif">for </span>
+                      <span className="font-serif italic text-[#ECC870]">Every Occasion</span>
+                    </h2>
+
+                    {/* Subtitle */}
+                    <p className="text-neutral-600 font-sans text-sm sm:text-base md:text-[17px] font-normal leading-relaxed mt-3 sm:mt-4 max-w-3xl mx-auto">
+                      From intimate gatherings to grand celebrations, we offer end-to-end catering services with customized menus, seamless execution and exceptional taste.
+                    </p>
+
+                  </div>
+
+                  {/* 4 Specialized Service Cards Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-7">
+                    {[
+                      {
+                        id: 'buffet',
+                        title: 'Buffet Catering',
+                        desc: 'A wide variety of delicious, freshly prepared dishes.',
+                        image: 'assets/home/service_buffet.jpg',
+                        icon: (
+                          <svg className="w-5 h-5 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                            <path d="M12 4v2M4 18h16a1 1 0 0 0 1-1A9 9 0 0 0 3 17a1 1 0 0 0 1 1z" />
+                            <circle cx="12" cy="4" r="1" fill="#ECC870" />
+                          </svg>
+                        )
+                      },
+                      {
+                        id: 'live_counters',
+                        title: 'Live Counters',
+                        desc: 'Interactive food stations for a delightful experience.',
+                        image: 'assets/home/service_live_counters.jpg',
+                        icon: (
+                          <svg className="w-5 h-5 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                            <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z" />
+                            <line x1="6" y1="17" x2="18" y2="17" />
+                          </svg>
+                        )
+                      },
+                      {
+                        id: 'custom_menus',
+                        title: 'Custom Menus',
+                        desc: 'Curated menu options tailored to your event.',
+                        image: 'assets/home/service_custom_menus.jpg',
+                        icon: (
+                          <svg className="w-5 h-5 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                            <path d="M18 2v20M2 2v8a4 4 0 0 0 4 4v8M6 2v6" />
+                          </svg>
+                        )
+                      },
+                      {
+                        id: 'event_support',
+                        title: 'Event Support',
+                        desc: 'Complete planning and on-site coordination.',
+                        image: 'assets/home/service_event_support.jpg',
+                        icon: (
+                          <svg className="w-5 h-5 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                          </svg>
+                        )
+                      }
+                    ].map((srv) => (
+                      <div 
+                        key={srv.id}
+                        onClick={() => handleNav('custom')}
+                        className="group relative rounded-[16px] sm:rounded-[18px] overflow-hidden bg-white border border-[#ECC870] cursor-pointer transition-all duration-300 flex flex-col justify-between shadow-[0_6px_20px_rgba(0,0,0,0.06)] hover:-translate-y-1.5 hover:shadow-[0_14px_30px_rgba(236,200,112,0.35)]"
+                      >
+                        <div className="relative w-full h-44 sm:h-48 md:h-52 overflow-hidden bg-[#F3EFEA]">
+                          <img 
+                            src={srv.image} 
+                            alt={srv.title}
+                            className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out" 
+                          />
+                        </div>
+
+                        <div className="relative z-10 flex flex-col items-center -mt-6">
+                          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-[#ECC870] bg-[#041A3B] flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-110">
+                            {srv.icon}
+                          </div>
+
+                          <div className="pt-3 pb-6 px-4 text-center w-full">
+                            <h3 className="font-serif text-[#0B1E38] text-base sm:text-lg font-bold mb-1.5 group-hover:text-[#2BA4EE] transition-colors">
+                              {srv.title}
+                            </h3>
+                            <p className="text-neutral-600 text-xs sm:text-[13px] leading-relaxed max-w-[240px] mx-auto">
+                              {srv.desc}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
+
+              </section>
+
+              {/* =========================================================================
+                  SECTION 4: PLAN YOUR NEXT EVENT WITH US (EXACT Image 2 Bottom)
+                  Curved wave divider, calendar badge, "Plan Your Next Event with Us",
+                  "Get a Custom Quote →" button, Charminar watermark
+              ========================================================================= */}
+              <section className="relative w-full bg-[#01142B] text-white overflow-hidden">
+                
+                {/* Curved Golden Ribbon Wave Divider - S-Curve matching Image 1 */}
+                <div className="w-full overflow-hidden leading-none -mt-1 relative z-10">
+                  <svg className="w-full h-10 sm:h-14 md:h-16 lg:h-20 block" viewBox="0 0 1440 90" fill="none" preserveAspectRatio="none">
+                    <path d="M 0,45 C 160,85 300,85 520,52 C 800,10 1100,8 1440,18 L 1440,90 L 0,90 Z" fill="#01142B" />
+                    <path d="M 0,45 C 160,85 300,85 520,52 C 800,10 1100,8 1440,18" stroke="url(#goldRibbonGradient)" strokeWidth="5" fill="none" />
+                  </svg>
+                </div>
+
+                <div className="max-w-[1700px] mx-auto px-4 sm:px-8 lg:px-12 pt-6 sm:pt-8 pb-12 sm:pb-16 relative">
+                  
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
+                    
+                    {/* Left: Calendar Badge + Event Planning Copy */}
+                    <div className="flex items-center gap-4 sm:gap-6 text-center md:text-left">
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-[#ECC870] bg-[#0B1E38] flex items-center justify-center shrink-0 shadow-lg">
+                        <svg className="w-7 h-7 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                          <line x1="16" y1="2" x2="16" y2="6" />
+                          <line x1="8" y1="2" x2="8" y2="6" />
+                          <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                      </div>
+
+                      <div>
+                        <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl text-white font-normal leading-tight">
+                          Plan Your <span className="font-serif italic text-[#ECC870]">Next Event</span> with Us
+                        </h3>
+                        <p className="text-neutral-300 text-xs sm:text-sm mt-1 font-sans">
+                          Tell us about your event and get a customized catering plan.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Right: Vertical Divider & "Get a Custom Quote →" Button & Charminar */}
+                    <div className="flex items-center gap-6 sm:gap-8">
+                      <div className="hidden md:block h-12 w-[1px] bg-[#ECC870]/40" />
+
+                      <button 
+                        onClick={() => setBookingOpen(true)}
+                        className="inline-flex items-center justify-center gap-2.5 px-8 sm:px-9 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] shadow-[0_6px_24px_rgba(237,168,61,0.4)] hover:shadow-[0_8px_32px_rgba(237,168,61,0.6)] hover:scale-[1.03] active:scale-[0.98] transition-all whitespace-nowrap"
+                      >
+                        <span>Get a Custom Quote</span>
+                        <span className="text-base leading-none">→</span>
+                      </button>
+
+                      <div className="hidden xl:block shrink-0">
+                        <img 
+                          src="assets/home/charminar_gold.jpg" 
+                          alt="Charminar" 
+                          className="w-20 xl:w-24 h-auto object-contain opacity-75"
+                        />
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </section>
+
+              {/* Home Footer */}
+              <footer className="bg-[#011227] border-t border-[#ECC870]/30 text-[#FAF8F5] py-14 px-4 sm:px-8 text-center text-xs">
+                <div className="max-w-4xl mx-auto flex flex-col items-center">
+                  <img src="assets/logo-cyan.png" alt="Nashwan Catering Services" className="h-20 sm:h-24 w-auto object-contain mb-4" />
+                  <div className="font-serif italic text-base sm:text-lg text-[#ECC870] mb-4">Authentic Flavours. Timeless Traditions. Unforgettable Celebrations.</div>
+                  <div className="flex flex-wrap justify-center gap-6 text-xs text-neutral-300 mb-6 font-medium">
+                    <button onClick={() => handleNav('home')} className="hover:text-[#ECC870] transition-colors">Home</button>
+                    <button onClick={() => handleNav('about')} className="hover:text-[#ECC870] transition-colors">About</button>
+                    <button onClick={() => handleNav('menu')} className="hover:text-[#ECC870] transition-colors">Menu</button>
+                    <button onClick={() => handleNav('custom')} className="hover:text-[#ECC870] transition-colors">Custom Menu</button>
+                    <button onClick={() => handleNav('gallery')} className="hover:text-[#ECC870] transition-colors">Gallery</button>
+                    <button onClick={() => handleNav('contact')} className="hover:text-[#ECC870] transition-colors">Contact</button>
+                  </div>
+                  <p className="text-white/60 text-[11px]">© {new Date().getFullYear()} Nashwan Caterings. Balaji Enclave, Uppal, Hyderabad, Telangana.<br />Direct Lines: 9492247495 • 9949390829</p>
+                </div>
+              </footer>
+            </div>
+          )}
+
+          {/* ==================== 2. ABOUT PAGE ==================== */}
+          {activePage === 'about' && (
+            <div className="pt-24 sm:pt-28 bg-[#01142B] text-white min-h-screen">
+              {/* Header Banner */}
+              <section className="relative py-16 sm:py-24 px-4 sm:px-8 lg:px-12 overflow-hidden bg-[#01142B]">
+                <div className="absolute inset-0 bg-cover bg-no-repeat opacity-25 pointer-events-none" style={{ backgroundImage: "url('assets/hero-bg.jpg')", backgroundPosition: 'right 20% center' }} />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#011227] via-[#01142B]/95 to-[#01142B]/75 pointer-events-none" />
+
+                <div className="relative z-10 max-w-5xl mx-auto text-center sm:text-left">
+                  <div className="flex items-center justify-center sm:justify-start gap-3 mb-4">
+                    <span className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-[#ECC870]">OUR STORY & PHILOSOPHY</span>
+                    <span className="w-12 h-[1px] bg-[#ECC870]/70 inline-block" />
+                  </div>
+                  <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-normal leading-tight text-white mb-4">
+                    Born in Hyderabad. <br />
+                    <span className="font-serif italic text-[#ECC870]">Inspired by Tradition. Driven by Taste.</span>
+                  </h1>
+                  <p className="text-neutral-300 text-base sm:text-lg leading-relaxed max-w-3xl">
+                    Nashwan Caterings began in 2023 with a passion for bringing together exceptional food and genuine hospitality. Our philosophy is built around a simple belief: <strong className="text-white">food is not merely part of an event. It is often the heart of the celebration.</strong>
+                  </p>
+                </div>
+              </section>
+
+              {/* S-Curve Divider */}
+              <div className="relative w-full h-[46px] sm:h-[62px] md:h-[76px] overflow-hidden leading-none z-10 -mt-[1px]">
+                <svg viewBox="0 0 1440 90" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full block" preserveAspectRatio="none">
+                  <path d="M 0,45 C 160,85 300,85 520,52 C 800,10 1100,8 1440,18 L 1440,90 L 0,90 Z" fill="#FAF8F5" />
+                  <path d="M 0,45 C 160,85 300,85 520,52 C 800,10 1100,8 1440,18" stroke="url(#goldRibbonGradient)" strokeWidth="3.2" fill="none" />
+                </svg>
+              </div>
+
+              {/* Ivory Story Section */}
+              <section className="py-16 sm:py-20 px-4 sm:px-8 lg:px-12 bg-[#FAF8F5] text-[#0B1E38] w-full">
+                <div className="max-w-6xl mx-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-center">
+                    <div className="space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed">
+                      <span className="text-[11px] font-semibold tracking-[0.25em] uppercase text-[#D4AF37] block">Bespoke Banqueting</span>
+                      <h2 className="font-serif text-2xl sm:text-4xl text-[#0B1E38] font-normal leading-tight">
+                        More Than Food. <br /><span className="italic text-[#2BA4EE]">An Experience to Remember.</span>
+                      </h2>
+                      <p>At Nashwan Caterings, every celebration has a story, and we believe the food should be one of its most memorable chapters.</p>
+                      <p>Our master chefs thoughtfully curate menus ranging from traditional Hyderabadi flavours to modern culinary creations, using carefully selected spices, aged basmati and slow-cooked degh traditions.</p>
+                      <p>Whether serving a small private gathering or catering a grand royal wedding for 2,000+ guests, we listen to your ideas and execute with flawless timing and impeccable presentation.</p>
+                    </div>
+                    <div className="rounded-[18px] p-2 bg-gradient-to-b from-[#ECC870]/70 via-[#ECC870]/30 to-[#ECC870]/60 shadow-xl">
+                      <div className="relative rounded-[14px] overflow-hidden bg-black h-80 sm:h-96">
+                        <img src="assets/hero-bg.jpg" alt="Nashwan Catering Banquet" className="w-full h-full object-cover" style={{ objectPosition: '85% 35%' }} />
                       </div>
                     </div>
                   </div>
+
+                  {/* 5 Pillars */}
+                  <div className="mt-20">
+                    <div className="text-center mb-10">
+                      <span className="text-[11px] font-semibold tracking-[0.25em] uppercase text-[#D4AF37]">THE CORE PRINCIPLES</span>
+                      <h3 className="font-serif text-2xl sm:text-4xl text-[#0B1E38] mt-1">Our Five Pillars</h3>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+                      {[
+                        { title: 'AUTHENTICITY', desc: "Honouring traditional tastes and Hyderabad's culinary heritage." },
+                        { title: 'QUALITY', desc: 'Selecting ingredients with freshness, aged basmati and pure ghee.' },
+                        { title: 'HYGIENE', desc: 'Maintaining careful preparation and sanitized service practices.' },
+                        { title: 'PRESENTATION', desc: 'Delighting the eyes with roll-top golden chafers and banquet artistry.' },
+                        { title: 'HOSPITALITY', desc: 'Serving every single guest with warmth, courtesy, and genuine care.' }
+                      ].map((p, i) => (
+                        <div key={i} className="p-6 rounded-[14px] bg-white border border-[#ECC870]/40 shadow-md hover:shadow-xl transition-all">
+                          <div className="font-serif font-bold text-sm text-[#0B1E38] mb-2">{p.title}</div>
+                          <p className="text-xs text-neutral-600 leading-relaxed">{p.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* About Footer */}
+              <footer className="bg-[#011227] border-t border-[#ECC870]/30 text-white/70 py-10 text-center text-xs">
+                © {new Date().getFullYear()} Nashwan Caterings. Uppal, Hyderabad. 9492247495 • 9949390829
+              </footer>
+            </div>
+          )}
+
+          
+          {/* ==================== 3. MENU PAGE (CURATED PACKAGES - NO SCROLLBAR) ==================== */}
+          {activePage === 'menu' && (() => {
+            const currentCategoryData = menuData[menuActiveCategory] || menuData.veg;
+            const packageList = Object.values(currentCategoryData.packages);
+            const currentPackage = currentCategoryData.packages[menuActivePackage] || packageList[0];
+
+            const handleWhatsAppInquiry = (pkg) => {
+              const target = pkg || currentPackage;
+              const msg = `Hi Nashwan Catering, I'm interested in the "${target.name}" package. Could you please share more details and pricing?`;
+              window.open(`https://wa.me/919949390829?text=${encodeURIComponent(msg)}`, '_blank');
+            };
+
+            return (
+              <div className="pt-24 sm:pt-28 bg-[#01142B] text-[#FDFBF7] min-h-screen flex flex-col font-sans selection:bg-[#ECC870]/30">
+                
+                {/* Header Banner */}
+                <section className="relative py-12 sm:py-16 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-[#011022] via-[#01142B] to-[#021B3A] border-b border-[#ECC870]/20 text-center overflow-hidden">
+                  <div className="max-w-4xl mx-auto">
+                    <span className="font-montserrat text-xs sm:text-[13px] font-medium tracking-[0.25em] uppercase text-[#ECC870] block mb-2">
+                      OUR CURATED MENUS & PACKAGES
+                    </span>
+                    <h1 className="font-cormorant text-3xl sm:text-5xl md:text-6xl text-white font-normal leading-tight mb-3">
+                      The Taste of Hyderabad
+                    </h1>
+                    <p className="font-lato text-neutral-300 text-xs sm:text-sm md:text-base font-normal max-w-2xl mx-auto leading-relaxed">
+                      Select from our chef-crafted packages or customize individual dishes tailored for your grand celebration.
+                    </p>
+                  </div>
+                </section>
+
+                {/* Main Content Area */}
+                <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-10 py-10 sm:py-14 flex-1">
+                  
+                  {/* Category Switcher Tabs (Zero Scrollbars - Clean Centered Layout) */}
+                  <div className="flex flex-col items-center justify-center mb-10 sm:mb-12">
+                    <span className="font-montserrat text-[11px] sm:text-xs font-medium uppercase tracking-[0.22em] text-[#ECC870]/80 mb-3 block">
+                      CLICK TO SWITCH CATEGORY
+                    </span>
+                    <div className="inline-flex p-1.5 rounded-full bg-[#021630] border border-[#ECC870]/30 shadow-xl">
+                      <button
+                        onClick={() => {
+                          setMenuActiveCategory('veg');
+                          setMenuActivePackage('simple');
+                        }}
+                        className={`px-6 sm:px-8 py-2.5 rounded-full text-xs sm:text-sm font-montserrat font-medium uppercase tracking-wider transition-all duration-300 ${
+                          menuActiveCategory === 'veg'
+                            ? 'bg-[#ECC870] text-[#01142B] font-semibold shadow-md'
+                            : 'text-neutral-300 hover:text-white'
+                        }`}
+                      >
+                        Vegetarian Menus
+                      </button>
+                      <button
+                        onClick={() => {
+                          setMenuActiveCategory('non-veg');
+                          setMenuActivePackage('standard');
+                        }}
+                        className={`px-6 sm:px-8 py-2.5 rounded-full text-xs sm:text-sm font-montserrat font-medium uppercase tracking-wider transition-all duration-300 ${
+                          menuActiveCategory === 'non-veg'
+                            ? 'bg-[#C53030] text-white font-semibold shadow-md'
+                            : 'text-neutral-300 hover:text-white'
+                        }`}
+                      >
+                        Non-Vegetarian Menus
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Two-Column Layout: Left Sidebar + Right Main Package Display */}
+                  <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
+                    
+                    {/* LEFT SIDEBAR: SELECT PACKAGE */}
+                    <aside className="w-full lg:w-72 xl:w-80 shrink-0">
+                      <div className="bg-[#021B3A]/90 border border-[#ECC870]/30 rounded-2xl p-5 sm:p-6 shadow-[0_12px_40px_rgba(0,0,0,0.45)] sticky top-28 backdrop-blur-md">
+                        
+                        <div className="mb-5 pb-4 border-b border-[#ECC870]/20">
+                          <h3 className="font-cormorant text-lg sm:text-xl font-medium tracking-wide text-[#ECC870] uppercase">
+                            Select Package
+                          </h3>
+                          <p className="font-montserrat text-[10px] sm:text-[11px] font-medium tracking-wider uppercase text-neutral-400 mt-1">
+                            Click a package to view details
+                          </p>
+                        </div>
+
+                        {/* Package List Buttons */}
+                        <div className="space-y-2.5 mb-6">
+                          {packageList.map((pkg) => {
+                            const isActive = currentPackage.id === pkg.id;
+                            return (
+                              <div
+                                key={pkg.id}
+                                onClick={() => setMenuActivePackage(pkg.id)}
+                                className={`group flex items-center justify-between p-3.5 rounded-xl cursor-pointer transition-all border ${
+                                  isActive
+                                    ? 'border-[#ECC870] bg-[#ECC870]/15 shadow-[0_0_20px_rgba(236,200,112,0.2)] text-[#ECC870]'
+                                    : 'border-[#ECC870]/20 bg-[#06244C]/60 hover:border-[#ECC870]/50 hover:bg-[#082E60] text-neutral-200 hover:text-white'
+                                }`}
+                              >
+                                <span className={`font-montserrat text-xs uppercase tracking-wider font-medium ${
+                                  isActive ? 'text-[#ECC870] font-semibold' : ''
+                                }`}>
+                                  {pkg.name}
+                                </span>
+                                
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleWhatsAppInquiry(pkg);
+                                  }}
+                                  title={`Inquire about ${pkg.name} on WhatsApp`}
+                                  className="p-1 rounded-full text-neutral-400 hover:text-[#25D366] transition-colors"
+                                >
+                                  💬
+                                </button>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {/* Custom Menu Builder Link */}
+                        <div className="pt-4 border-t border-[#ECC870]/20">
+                          <p className="font-lato text-xs text-neutral-400 mb-2">
+                            Want to mix and match individual items?
+                          </p>
+                          <button
+                            onClick={() => handleNav('custom')}
+                            className="inline-flex items-center gap-2 font-montserrat text-xs font-medium uppercase tracking-wider text-[#ECC870] hover:text-[#F7DF94] group transition-colors"
+                          >
+                            <span>Custom Menu Builder</span>
+                            <span>→</span>
+                          </button>
+                        </div>
+
+                      </div>
+                    </aside>
+
+                    {/* RIGHT MAIN PANEL: ACTIVE PACKAGE DETAILS & DISH CATEGORIES */}
+                    <main className="flex-1 w-full min-w-0">
+                      
+                      {/* Package Title Banner & Metadata */}
+                      <div className="bg-[#021B3A]/95 border border-[#ECC870]/35 rounded-2xl p-6 sm:p-8 mb-6 shadow-2xl backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                          <h2 className="font-cormorant text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight text-white mb-2">
+                            {currentPackage.name}
+                          </h2>
+                          
+                          {/* Metadata Row */}
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-lato text-neutral-300 font-normal">
+                            <span className="flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#ECC870]" />
+                              <strong>Min Order:</strong> {currentPackage.minOrder}
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#ECC870]" />
+                              <strong>Food Serving Staff:</strong> {currentPackage.servingStaff}
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#ECC870]" />
+                              <strong>Menu Customization:</strong> {currentPackage.customization}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Top-Right WhatsApp Booking Button */}
+                        <button
+                          onClick={() => handleWhatsAppInquiry(currentPackage)}
+                          className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[#ECC870] hover:bg-[#F7DF94] text-[#01142B] font-montserrat font-medium text-xs uppercase tracking-wider shadow-lg hover:shadow-[0_0_20px_rgba(236,200,112,0.3)] transition-all hover:scale-[1.02]"
+                        >
+                          <span>💬</span>
+                          <span>BOOK / ENQUIRE</span>
+                        </button>
+                      </div>
+
+                      {/* Dish Sections Grid (2 Columns) */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+                        {currentPackage.sections.map((section, idx) => (
+                          <div
+                            key={idx}
+                            className="bg-[#021B3A]/85 border border-[#ECC870]/25 rounded-2xl p-5 sm:p-6 shadow-xl hover:border-[#ECC870]/50 hover:bg-[#03234B]/95 transition-all flex flex-col justify-between"
+                          >
+                            <div>
+                              {/* Section Title */}
+                              <h3 className="font-cormorant text-lg sm:text-xl font-medium text-[#ECC870] pb-2.5 border-b border-[#ECC870]/20 mb-4 flex items-center justify-between">
+                                <span>{section.title}</span>
+                                <span className="text-[11px] font-montserrat text-neutral-400 font-normal">
+                                  {section.items.length} options
+                                </span>
+                              </h3>
+
+                              {/* Dish Items List */}
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5 text-xs sm:text-sm font-lato text-neutral-200">
+                                {section.items.map((item, itemIdx) => (
+                                  <div key={itemIdx} className="flex items-start gap-2">
+                                    <span className="text-[#ECC870] font-bold text-xs mt-0.5">✓</span>
+                                    <span className="leading-snug">{item}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Bottom Inquire Card */}
+                      <div className="mt-8 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-[#011227] via-[#021F43] to-[#01142B] border border-[#ECC870]/35 flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left shadow-2xl">
+                        <div>
+                          <h4 className="font-cormorant text-2xl font-medium text-white mb-1">
+                            Ready to book {currentPackage.name}?
+                          </h4>
+                          <p className="font-lato text-xs sm:text-sm text-neutral-300 font-normal">
+                            Our catering managers will customize portions, live counters, and banquet setup to your exact guest count.
+                          </p>
+                        </div>
+
+                        <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+                          <button
+                            onClick={() => handleWhatsAppInquiry(currentPackage)}
+                            className="px-6 py-3 rounded-lg bg-[#25D366] hover:bg-[#1EBE5D] text-white font-montserrat font-medium text-xs uppercase tracking-wider shadow-md flex items-center gap-2 hover:scale-[1.02] transition-all"
+                          >
+                            <span>💬</span>
+                            <span>Chat on WhatsApp</span>
+                          </button>
+                          <button
+                            onClick={() => handleNav('custom')}
+                            className="px-6 py-3 rounded-lg border border-[#ECC870] text-[#ECC870] hover:bg-[#ECC870]/10 font-montserrat font-medium text-xs uppercase tracking-wider transition-colors"
+                          >
+                            Custom Builder
+                          </button>
+                        </div>
+                      </div>
+
+                    </main>
+
+                  </div>
+
                 </div>
               </div>
-            </main>
-          )}
+            );
+          })()}
 
-          {/* ==================== 2. ABOUT US PAGE ==================== */}
-          {activePage === 'about' && (
-            <div className="pt-24 sm:pt-28">
-              <section className="py-16 px-4 sm:px-8 lg:px-12 max-w-6xl mx-auto">
-                <span className="text-xs uppercase tracking-widest text-[#E5A947] font-semibold">Our Story</span>
-                <h1 className="font-serif text-3xl sm:text-5xl text-white mt-1 mb-4">Born in Hyderabad. Inspired by Tradition. Driven by Taste.</h1>
-                <p className="text-neutral-300 text-base leading-relaxed mb-6">
-                  Nashwan Caterings began in 2023 with a passion for bringing together exceptional food and genuine hospitality. Our philosophy is built around a simple belief: <strong className="text-white">food is not merely part of an event. It is often the heart of the celebration.</strong>
-                </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-10 items-center">
-                  <div className="space-y-4 text-sm text-neutral-300 leading-relaxed">
-                    <h2 className="font-serif text-2xl text-white">More Than Food. An Experience to Remember.</h2>
-                    <p>At Nashwan Caterings, every celebration has a story, and we believe the food should be one of its most memorable chapters.</p>
-                    <p>Our chefs thoughtfully curate menus ranging from traditional authentic flavours to modern culinary creations, using carefully selected ingredients and balanced spices.</p>
-                    <p>Whether we are serving a small private gathering or catering a large celebration, we approach every event with the same attention to detail: we listen to your ideas, understand your preferences, and create a menu that complements your celebration.</p>
-                  </div>
-                  <div className="rounded-2xl overflow-hidden border border-[#8C6D37]/40 shadow-2xl">
-                    <img src="assets/hero-bg.jpg" alt="Banquet" className="w-full h-80 object-cover" />
-                  </div>
-                </div>
-
-                <div className="my-12">
-                  <h3 className="font-serif text-2xl text-white text-center mb-8">Our Five Pillars</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                    <div className="p-5 rounded-xl bg-[#120F0D] border border-[#8C6D37]/30">
-                      <div className="text-[#E5A947] font-bold text-xs uppercase mb-1">Authenticity</div>
-                      <p className="text-xs text-neutral-300">Honouring traditional tastes and Hyderabad's culinary heritage.</p>
-                    </div>
-                    <div className="p-5 rounded-xl bg-[#120F0D] border border-[#8C6D37]/30">
-                      <div className="text-[#E5A947] font-bold text-xs uppercase mb-1">Quality</div>
-                      <p className="text-xs text-neutral-300">Selecting ingredients with freshness, flavour, and consistency.</p>
-                    </div>
-                    <div className="p-5 rounded-xl bg-[#120F0D] border border-[#8C6D37]/30">
-                      <div className="text-[#E5A947] font-bold text-xs uppercase mb-1">Hygiene</div>
-                      <p className="text-xs text-neutral-300">Maintaining careful food preparation and service practices.</p>
-                    </div>
-                    <div className="p-5 rounded-xl bg-[#120F0D] border border-[#8C6D37]/30">
-                      <div className="text-[#E5A947] font-bold text-xs uppercase mb-1">Presentation</div>
-                      <p className="text-xs text-neutral-300">Delighting the eyes with banquet elegance before the first bite.</p>
-                    </div>
-                    <div className="p-5 rounded-xl bg-[#120F0D] border border-[#8C6D37]/30">
-                      <div className="text-[#E5A947] font-bold text-xs uppercase mb-1">Hospitality</div>
-                      <p className="text-xs text-neutral-300">Serving every guest with warmth, professionalism, and care.</p>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
-          )}
-
-          {/* ==================== 3. MENU PAGE ==================== */}
-          {activePage === 'menu' && (
-            <div className="pt-24 sm:pt-28">
-              <section className="py-12 px-4 sm:px-8 lg:px-12 max-w-6xl mx-auto">
-                <span className="text-xs uppercase tracking-widest text-[#E5A947] font-semibold">Our Repertoire</span>
-                <h1 className="font-serif text-3xl sm:text-5xl text-white mt-1 mb-2">The Taste of Hyderabad</h1>
-                <p className="font-serif italic text-lg text-[#E5A947] mb-6">Authentic Flavours. Timeless Traditions.</p>
-                <p className="text-neutral-300 text-sm leading-relaxed max-w-3xl mb-8">
-                  Hyderabad has a culinary heritage unlike any other. Inspired by the city's diverse food culture, our menus bring together Hyderabadi, Telangana, South Indian, North Indian, and contemporary cuisines.
-                </p>
-
-                {/* Tabs */}
-                <div className="flex gap-2 border-b border-[#8C6D37]/30 pb-3 mb-8 overflow-x-auto">
-                  <button onClick={() => setMenuTab('hyderabadi')} className={`px-4 py-2 rounded-lg text-xs font-semibold ${menuTab === 'hyderabadi' ? 'bg-[#E5A947] text-black' : 'text-neutral-300 hover:text-white'}`}>Hyderabadi Specialities</button>
-                  <button onClick={() => setMenuTab('south')} className={`px-4 py-2 rounded-lg text-xs font-semibold ${menuTab === 'south' ? 'bg-[#E5A947] text-black' : 'text-neutral-300 hover:text-white'}`}>South Indian Flavours</button>
-                  <button onClick={() => setMenuTab('north')} className={`px-4 py-2 rounded-lg text-xs font-semibold ${menuTab === 'north' ? 'bg-[#E5A947] text-black' : 'text-neutral-300 hover:text-white'}`}>North Indian Favourites</button>
-                  <button onClick={() => setMenuTab('contemporary')} className={`px-4 py-2 rounded-lg text-xs font-semibold ${menuTab === 'contemporary' ? 'bg-[#E5A947] text-black' : 'text-neutral-300 hover:text-white'}`}>Contemporary Cuisine</button>
-                </div>
-
-                {menuTab === 'hyderabadi' && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/30 rounded-xl">
-                      <h4 className="text-[#E5A947] font-bold text-sm uppercase mb-3">Signature Rice & Biryani</h4>
-                      <ul className="text-xs text-neutral-300 space-y-2">
-                        <li>• Zafrani Mutton Dum Biryani (Aged Basmati, Saffron)</li>
-                        <li>• Special Chicken Dum Biryani (Original Degh Style)</li>
-                        <li>• Vegetable Dum Biryani with Saffron</li>
-                        <li>• Bagara Rice with Dalcha</li>
-                      </ul>
-                    </div>
-                    <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/30 rounded-xl">
-                      <h4 className="text-[#E5A947] font-bold text-sm uppercase mb-3">Hyderabadi Starters & Curries</h4>
-                      <ul className="text-xs text-neutral-300 space-y-2">
-                        <li>• Chicken Majestic Flambé with Curry Leaves</li>
-                        <li>• Mutton Seekh Kebab & Tala Hua Gosht</li>
-                        <li>• Dum Ka Murgh & Mutton Rogan Josh</li>
-                        <li>• Mirchi Ka Salan, Rumali Roti & Double Ka Meetha</li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
-
-                {menuTab === 'south' && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/30 rounded-xl">
-                      <h4 className="text-[#E5A947] font-bold text-sm uppercase mb-3">Traditional Breakfast & Tiffins</h4>
-                      <ul className="text-xs text-neutral-300 space-y-2">
-                        <li>• Thatte Ghee Idli & Crispy Medu Vada</li>
-                        <li>• Live Dosa Station (Ghee Roast, Masala, Rava Dosa)</li>
-                        <li>• Drumstick Sambar & 3 Varieties of Chutney</li>
-                      </ul>
-                    </div>
-                    <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/30 rounded-xl">
-                      <h4 className="text-[#E5A947] font-bold text-sm uppercase mb-3">Traditional Rice & Sweets</h4>
-                      <ul className="text-xs text-neutral-300 space-y-2">
-                        <li>• Bisi Bele Bath with Traditional Crisps</li>
-                        <li>• Tempered Curd Rice & Tamarind Rice</li>
-                        <li>• Melt-in-Mouth Mysore Pak & Semiya Payasam</li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
-
-                {menuTab === 'north' && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/30 rounded-xl">
-                      <h4 className="text-[#E5A947] font-bold text-sm uppercase mb-3">Tandoor & Rich Curries</h4>
-                      <ul className="text-xs text-neutral-300 space-y-2">
-                        <li>• Paneer Malai Tikka & Tandoori Murgh</li>
-                        <li>• Butter Chicken & Dal Makhani Overnight Simmer</li>
-                        <li>• Garlic Naan & Stuffed Kulchas</li>
-                      </ul>
-                    </div>
-                    <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/30 rounded-xl">
-                      <h4 className="text-[#E5A947] font-bold text-sm uppercase mb-3">Desserts & Pulao</h4>
-                      <ul className="text-xs text-neutral-300 space-y-2">
-                        <li>• Hot Gulab Jamun with Rabdi</li>
-                        <li>• Kashmiri Zafrani Pulao & Rasmalai</li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
-
-                {menuTab === 'contemporary' && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/30 rounded-xl">
-                      <h4 className="text-[#E5A947] font-bold text-sm uppercase mb-3">Indo-Chinese & Continental</h4>
-                      <ul className="text-xs text-neutral-300 space-y-2">
-                        <li>• Crispy Chilli Corn & Veg Manchurian</li>
-                        <li>• Live Pasta Station (Alfredo, Arrabbiata)</li>
-                        <li>• Mocktail Beverage Bar (Mojito, Zafrani Sharbat)</li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
-
-                <div className="mt-8 text-center">
-                  <button onClick={() => handleNav('custom')} className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] text-black font-semibold text-xs tracking-wider uppercase shadow-lg">
-                    CREATE YOUR MENU
-                  </button>
-                </div>
-              </section>
-            </div>
-          )}
-
-          {/* ==================== 4. CUSTOM CATERING ==================== */}
+          {/* ==================== 4. CUSTOM MENU CURATOR PAGE ==================== */}
           {activePage === 'custom' && (
             <div className="pt-24 sm:pt-28">
-              <section className="py-12 px-4 sm:px-8 lg:px-12 max-w-6xl mx-auto">
-                <span className="text-xs uppercase tracking-widest text-[#E5A947] font-semibold">Custom Solutions</span>
-                <h1 className="font-serif text-3xl sm:text-5xl text-white mt-1 mb-2">Your Occasion. Your Flavours. Your Menu.</h1>
+              <section className="py-12 px-4 sm:px-8 lg:px-12 max-w-[1700px] mx-auto">
+                <span className="text-xs uppercase tracking-widest text-[#E5A947] font-semibold">Interactive Banquet Builder</span>
+                <h1 className="font-serif text-3xl sm:text-5xl text-white mt-1 mb-2">Curate Your Custom Menu</h1>
                 <p className="text-neutral-300 text-sm leading-relaxed max-w-3xl mb-8">
-                  Instead of a one-size-fits-all menu, we tailor the catering experience around the occasion, guest count, food preferences, service style, and budget.
+                  Browse dishes, select items for your feast, and send the final list directly to WhatsApp for an instant proposal.
                 </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                  <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/30 rounded-xl">
-                    <h3 className="font-serif text-xl text-white font-bold mb-1">Wedding Catering</h3>
-                    <p className="text-xs text-[#E5A947] mb-2 italic">Celebrate Love with a Feast to Remember</p>
-                    <p className="text-xs text-neutral-300 mb-4">Traditional Menus | Buffet Service | Live Counters | Desserts | Custom Selections</p>
-                  </div>
-                  <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/30 rounded-xl">
-                    <h3 className="font-serif text-xl text-white font-bold mb-1">Corporate Catering</h3>
-                    <p className="text-xs text-[#E5A947] mb-2 italic">Professional Service. Exceptional Taste.</p>
-                    <p className="text-xs text-neutral-300 mb-4">Conferences | Executive Lunches | Office Celebrations | Annual Galas</p>
-                  </div>
-                  <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/30 rounded-xl">
-                    <h3 className="font-serif text-xl text-white font-bold mb-1">Birthday & Private Parties</h3>
-                    <p className="text-xs text-[#E5A947] mb-2 italic">Small Gathering or Grand Celebration</p>
-                    <p className="text-xs text-neutral-300 mb-4">Birthdays • Anniversaries • Engagements • Housewarmings • Family Functions</p>
-                  </div>
-                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                  
+                  {/* Left: Dish Selector (8 Cols) */}
+                  <div className="lg:col-span-8 space-y-6">
+                    {/* Category Filter Pills */}
+                    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                      <button onClick={() => setCuratorCategory('all')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap ${curatorCategory === 'all' ? 'bg-[#E5A947] text-black' : 'bg-[#14120F] text-neutral-300 border border-[#8C6D37]/30'}`}>All Dishes</button>
+                      {curatorDatabase.map((c, i) => (
+                        <button key={i} onClick={() => setCuratorCategory(c.category)} className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap ${curatorCategory === c.category ? 'bg-[#E5A947] text-black' : 'bg-[#14120F] text-neutral-300 border border-[#8C6D37]/30'}`}>{c.category}</button>
+                      ))}
+                    </div>
 
-                <div className="p-8 bg-[#120F0D] border border-[#8C6D37]/40 rounded-2xl mb-8">
-                  <h3 className="font-serif text-2xl text-white mb-6 text-center">How We Bring Your Event to Life</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                    <div className="p-4 bg-black/40 rounded-xl border border-white/5">
-                      <div className="text-[#E5A947] font-bold text-lg mb-1">01</div>
-                      <div className="text-xs font-bold text-white mb-1">Share Your Vision</div>
-                      <p className="text-[11px] text-neutral-300">Tell us about your event, venue, date, guest count, and preferences.</p>
-                    </div>
-                    <div className="p-4 bg-black/40 rounded-xl border border-white/5">
-                      <div className="text-[#E5A947] font-bold text-lg mb-1">02</div>
-                      <div className="text-xs font-bold text-white mb-1">Discover Flavours</div>
-                      <p className="text-[11px] text-neutral-300">Explore traditional, regional, and contemporary food options.</p>
-                    </div>
-                    <div className="p-4 bg-black/40 rounded-xl border border-white/5">
-                      <div className="text-[#E5A947] font-bold text-lg mb-1">03</div>
-                      <div className="text-xs font-bold text-white mb-1">Curate Your Menu</div>
-                      <p className="text-[11px] text-neutral-300">We build a menu that complements your occasion and guests.</p>
-                    </div>
-                    <div className="p-4 bg-black/40 rounded-xl border border-white/5">
-                      <div className="text-[#E5A947] font-bold text-lg mb-1">04</div>
-                      <div className="text-xs font-bold text-white mb-1">Prepare & Present</div>
-                      <p className="text-[11px] text-neutral-300">Our culinary team focuses on preparation, taste, hygiene, and presentation.</p>
-                    </div>
-                    <div className="p-4 bg-black/40 rounded-xl border border-white/5">
-                      <div className="text-[#E5A947] font-bold text-lg mb-1">05</div>
-                      <div className="text-xs font-bold text-white mb-1">Celebrate & Enjoy</div>
-                      <p className="text-[11px] text-neutral-300">You enjoy your special moments while our team handles the experience.</p>
+                    {curatorDatabase.filter(c => curatorCategory === 'all' || curatorCategory === c.category).map((cat, idx) => (
+                      <div key={idx} className="bg-[#120F0D] border border-[#8C6D37]/30 rounded-2xl p-5 shadow-xl">
+                        <h3 className="font-serif text-lg font-bold text-white mb-3 pb-2 border-b border-[#8C6D37]/20 flex justify-between items-center">
+                          <span>{cat.category}</span>
+                          <span className="text-xs text-neutral-400 font-normal">{cat.items.length} items</span>
+                        </h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {cat.items.map((item, dIdx) => {
+                            const isSel = selectedDishes.includes(item.name);
+                            return (
+                              <div key={dIdx} onClick={() => toggleDish(item.name)} className={`p-3 rounded-xl border cursor-pointer transition-all flex items-start justify-between gap-2 ${isSel ? 'bg-[#E5A947]/20 border-[#E5A947] text-[#E5A947]' : 'bg-[#181512] border-white/5 text-neutral-300 hover:border-[#8C6D37]/50'}`}>
+                                <div>
+                                  <div className="flex items-center gap-1.5">
+                                    <span className={`w-2 h-2 rounded-full shrink-0 ${item.veg ? 'bg-emerald-500' : 'bg-red-500'}`} />
+                                    <div className="font-semibold text-xs text-white">{item.name}</div>
+                                  </div>
+                                  <p className="text-[10px] text-neutral-400 mt-0.5">{item.desc}</p>
+                                </div>
+                                <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${isSel ? 'bg-[#E5A947] text-black' : 'border border-neutral-600'}`}>{isSel ? '✓' : '+'}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Right: Sticky Summary & WhatsApp Send (4 Cols) */}
+                  <div className="lg:col-span-4 sticky top-28 space-y-4">
+                    <div className="p-5 rounded-2xl bg-[#120F0D] border border-[#8C6D37]/40 shadow-2xl space-y-3">
+                      <div className="flex justify-between items-center pb-2 border-b border-[#8C6D37]/20">
+                        <h4 className="font-serif font-bold text-base text-white">Your Selected Menu</h4>
+                        <span className="bg-[#E5A947] text-black text-xs px-2.5 py-0.5 rounded-full font-bold">{selectedDishes.length} Dishes</span>
+                      </div>
+
+                      <div className="space-y-2 text-xs">
+                        <input type="text" placeholder="Your Name" value={curatorDetails.name} onChange={(e) => setCuratorDetails({...curatorDetails, name: e.target.value})} className="w-full bg-[#181512] border border-[#8C6D37]/30 rounded-lg p-2 text-white" />
+                        <input type="tel" placeholder="Phone Number" value={curatorDetails.phone} onChange={(e) => setCuratorDetails({...curatorDetails, phone: e.target.value})} className="w-full bg-[#181512] border border-[#8C6D37]/30 rounded-lg p-2 text-white" />
+                        <div className="grid grid-cols-2 gap-2">
+                          <select value={curatorDetails.eventType} onChange={(e) => setCuratorDetails({...curatorDetails, eventType: e.target.value})} className="w-full bg-[#181512] border border-[#8C6D37]/30 rounded-lg p-2 text-xs text-white">
+                            <option>Royal Wedding</option>
+                            <option>Grand Reception</option>
+                            <option>Corporate Gala</option>
+                            <option>Birthday Party</option>
+                          </select>
+                          <select value={curatorDetails.guests} onChange={(e) => setCuratorDetails({...curatorDetails, guests: e.target.value})} className="w-full bg-[#181512] border border-[#8C6D37]/30 rounded-lg p-2 text-xs text-white">
+                            <option>100 - 200 Guests</option>
+                            <option>300 - 500 Guests</option>
+                            <option>500 - 1000 Guests</option>
+                            <option>1000+ Guests</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Selected Items Scroll */}
+                      <div className="max-h-52 overflow-y-auto space-y-1 pr-1 border-t border-[#8C6D37]/20 pt-2">
+                        {selectedDishes.length === 0 ? (
+                          <div className="text-xs text-neutral-400 italic py-4 text-center">Click dishes on the left to add them.</div>
+                        ) : (
+                          selectedDishes.map((item, idx) => (
+                            <div key={idx} className="flex justify-between text-xs p-1.5 bg-[#181512] rounded">
+                              <span className="truncate pr-1">{item}</span>
+                              <button onClick={() => toggleDish(item)} className="text-neutral-400 hover:text-red-400">✕</button>
+                            </div>
+                          ))
+                        )}
+                      </div>
+
+                      <button onClick={handleSendCuratorWhatsApp} disabled={selectedDishes.length === 0} className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] text-black font-bold text-xs uppercase tracking-wider shadow-xl disabled:opacity-50">
+                        Send Custom Menu to WhatsApp ({selectedDishes.length})
+                      </button>
                     </div>
                   </div>
-                </div>
 
-                <div className="text-center">
-                  <button onClick={() => setBookingOpen(true)} className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] text-black font-semibold text-xs tracking-wider uppercase shadow-lg">
-                    PLAN MY EVENT
-                  </button>
                 </div>
               </section>
             </div>
           )}
 
-          {/* ==================== 5. GALLERY ==================== */}
+          {/* ==================== 5. GALLERY PAGE ==================== */}
           {activePage === 'gallery' && (
             <div className="pt-24 sm:pt-28">
               <section className="py-12 px-4 sm:px-8 lg:px-12 max-w-6xl mx-auto">
@@ -553,22 +1686,28 @@
                 <p className="font-serif italic text-lg text-[#E5A947] mb-8">Discover the Flavours. Experience the Moments.</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="rounded-xl overflow-hidden bg-[#120F0D] border border-[#8C6D37]/30">
-                    <img src="assets/hero-bg.jpg" alt="Signature Dishes" className="w-full h-52 object-cover" />
+                  <div className="rounded-xl overflow-hidden bg-[#120F0D] border border-[#8C6D37]/35 shadow-lg group">
+                    <div className="relative h-56 overflow-hidden bg-black">
+                      <img src="assets/hero-bg.jpg" alt="Signature Dishes" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" style={{ objectPosition: '92% 55%' }} />
+                    </div>
                     <div className="p-4">
                       <h4 className="font-serif font-bold text-white text-base">Signature Dishes</h4>
                       <p className="text-xs text-neutral-300 mt-1">Where flavour meets presentation — close-up of authentic degh biryanis and starters.</p>
                     </div>
                   </div>
-                  <div className="rounded-xl overflow-hidden bg-[#120F0D] border border-[#8C6D37]/30">
-                    <img src="assets/hero-bg.jpg" alt="Weddings" className="w-full h-52 object-cover" />
+                  <div className="rounded-xl overflow-hidden bg-[#120F0D] border border-[#8C6D37]/35 shadow-lg group">
+                    <div className="relative h-56 overflow-hidden bg-black">
+                      <img src="assets/hero-bg.jpg" alt="Weddings" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" style={{ objectPosition: '80% 35%' }} />
+                    </div>
                     <div className="p-4">
                       <h4 className="font-serif font-bold text-white text-base">Weddings & Receptions</h4>
                       <p className="text-xs text-neutral-300 mt-1">Beautiful food for unforgettable beginnings — grand buffet arrangements.</p>
                     </div>
                   </div>
-                  <div className="rounded-xl overflow-hidden bg-[#120F0D] border border-[#8C6D37]/30">
-                    <img src="assets/hero-bg.jpg" alt="Corporate Events" className="w-full h-52 object-cover" />
+                  <div className="rounded-xl overflow-hidden bg-[#120F0D] border border-[#8C6D37]/35 shadow-lg group">
+                    <div className="relative h-56 overflow-hidden bg-black">
+                      <img src="assets/hero-bg.jpg" alt="Corporate Events" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" style={{ objectPosition: '60% 45%' }} />
+                    </div>
                     <div className="p-4">
                       <h4 className="font-serif font-bold text-white text-base">Corporate Events</h4>
                       <p className="text-xs text-neutral-300 mt-1">Professional catering, thoughtfully delivered for summits and annual events.</p>
@@ -585,7 +1724,7 @@
             </div>
           )}
 
-          {/* ==================== 6. CONTACT ==================== */}
+          {/* ==================== 6. CONTACT PAGE ==================== */}
           {activePage === 'contact' && (
             <div className="pt-24 sm:pt-28">
               <section className="py-12 px-4 sm:px-8 lg:px-12 max-w-6xl mx-auto">
@@ -594,24 +1733,12 @@
                 <p className="font-serif italic text-lg text-[#E5A947] mb-8">Your Celebration Starts Here</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* Quote Form */}
                   <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/35 rounded-xl">
                     <h3 className="font-serif text-xl text-white mb-4">Request a Catering Quote</h3>
                     <form onSubmit={handleBookingSubmit} className="space-y-4">
-                      <input 
-                        type="text" required placeholder="Your Name"
-                        value={bookingData.name} onChange={(e) => setBookingData({...bookingData, name: e.target.value})}
-                        className="w-full bg-[#181512] border border-[#8C6D37]/35 rounded-lg px-3.5 py-2 text-xs text-white"
-                      />
-                      <input 
-                        type="tel" required placeholder="Phone Number"
-                        value={bookingData.phone} onChange={(e) => setBookingData({...bookingData, phone: e.target.value})}
-                        className="w-full bg-[#181512] border border-[#8C6D37]/35 rounded-lg px-3.5 py-2 text-xs text-white"
-                      />
-                      <select 
-                        value={bookingData.eventType} onChange={(e) => setBookingData({...bookingData, eventType: e.target.value})}
-                        className="w-full bg-[#181512] border border-[#8C6D37]/35 rounded-lg px-3.5 py-2 text-xs text-white"
-                      >
+                      <input type="text" required placeholder="Your Name" value={bookingData.name} onChange={(e) => setBookingData({...bookingData, name: e.target.value})} className="w-full bg-[#181512] border border-[#8C6D37]/35 rounded-lg px-3.5 py-2 text-xs text-white" />
+                      <input type="tel" required placeholder="Phone Number" value={bookingData.phone} onChange={(e) => setBookingData({...bookingData, phone: e.target.value})} className="w-full bg-[#181512] border border-[#8C6D37]/35 rounded-lg px-3.5 py-2 text-xs text-white" />
+                      <select value={bookingData.eventType} onChange={(e) => setBookingData({...bookingData, eventType: e.target.value})} className="w-full bg-[#181512] border border-[#8C6D37]/35 rounded-lg px-3.5 py-2 text-xs text-white">
                         <option>Wedding Banquet & Reception</option>
                         <option>Corporate Summit / Gala</option>
                         <option>Birthday / Family Gathering</option>
@@ -622,7 +1749,6 @@
                     </form>
                   </div>
 
-                  {/* Coordinates */}
                   <div className="p-6 bg-[#120F0D] border border-[#8C6D37]/35 rounded-xl space-y-4 text-xs text-neutral-300">
                     <h3 className="font-serif text-xl text-white mb-2">Connect With Nashwan</h3>
                     <div>
@@ -638,35 +1764,12 @@
                       <span>8:00 AM to 11:00 PM IST</span>
                     </div>
                     <div className="pt-2">
-                      <a 
-                        href="https://www.justdial.com/Hyderabad/Nashwan-Catering-Services-Balaji-Enclave-Uppal/040PXX40-XX40-250414090522-R6N9_BZDET"
-                        target="_blank" rel="noopener noreferrer"
-                        className="text-xs text-[#E5A947] underline"
-                      >
-                        View JustDial Profile →
-                      </a>
+                      <a href="https://www.justdial.com/Hyderabad/Nashwan-Catering-Services-Balaji-Enclave-Uppal/040PXX40-XX40-250414090522-R6N9_BZDET" target="_blank" rel="noopener noreferrer" className="text-xs text-[#E5A947] underline">View JustDial Profile →</a>
                     </div>
                   </div>
                 </div>
               </section>
             </div>
-          )}
-
-          {/* Footer for Non-Home Pages */}
-          {activePage !== 'home' && (
-            <footer className="bg-[#0A0907] border-t border-[#8C6D37]/30 text-[#FDFBF7] py-8 px-4 sm:px-8 text-center text-xs text-neutral-400">
-              <div className="font-serif text-base text-white font-bold mb-1">NASHWAN CATERINGS</div>
-              <div className="text-[#E5A947] italic mb-3">Authentic Flavours. Timeless Traditions.</div>
-              <div className="flex justify-center gap-4 text-xs text-neutral-300 mb-4">
-                <button onClick={() => handleNav('home')}>Home</button>
-                <button onClick={() => handleNav('about')}>About</button>
-                <button onClick={() => handleNav('menu')}>Menu</button>
-                <button onClick={() => handleNav('custom')}>Custom Catering</button>
-                <button onClick={() => handleNav('gallery')}>Gallery</button>
-                <button onClick={() => handleNav('contact')}>Contact</button>
-              </div>
-              <p>© {new Date().getFullYear()} Nashwan Caterings. Hyderabad, Telangana.</p>
-            </footer>
           )}
 
           {/* Booking Modal */}
@@ -682,27 +1785,16 @@
                 <form onSubmit={handleBookingSubmit} className="space-y-4">
                   <div>
                     <label className="block text-xs font-medium text-neutral-300 mb-1">Your Name *</label>
-                    <input 
-                      type="text" required placeholder="Full Name"
-                      value={bookingData.name} onChange={(e) => setBookingData({...bookingData, name: e.target.value})}
-                      className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#E5A947]"
-                    />
+                    <input type="text" required placeholder="Full Name" value={bookingData.name} onChange={(e) => setBookingData({...bookingData, name: e.target.value})} className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#E5A947]" />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-neutral-300 mb-1">Phone Number *</label>
-                    <input 
-                      type="tel" required placeholder="Mobile Number"
-                      value={bookingData.phone} onChange={(e) => setBookingData({...bookingData, phone: e.target.value})}
-                      className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#E5A947]"
-                    />
+                    <input type="tel" required placeholder="Mobile Number" value={bookingData.phone} onChange={(e) => setBookingData({...bookingData, phone: e.target.value})} className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#E5A947]" />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-medium text-neutral-300 mb-1">Event Type</label>
-                      <select 
-                        value={bookingData.eventType} onChange={(e) => setBookingData({...bookingData, eventType: e.target.value})}
-                        className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3 py-2.5 text-xs text-white"
-                      >
+                      <select value={bookingData.eventType} onChange={(e) => setBookingData({...bookingData, eventType: e.target.value})} className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3 py-2.5 text-xs text-white">
                         <option>Royal Wedding Banquet</option>
                         <option>Corporate Gala</option>
                         <option>Birthday / Family Function</option>
@@ -710,10 +1802,7 @@
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-neutral-300 mb-1">Guest Count</label>
-                      <select 
-                        value={bookingData.guests} onChange={(e) => setBookingData({...bookingData, guests: e.target.value})}
-                        className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3 py-2.5 text-xs text-white"
-                      >
+                      <select value={bookingData.guests} onChange={(e) => setBookingData({...bookingData, guests: e.target.value})} className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3 py-2.5 text-xs text-white">
                         <option>100 - 300 Guests</option>
                         <option>300 - 600 Guests</option>
                         <option>600 - 1200 Guests</option>
@@ -729,34 +1818,7 @@
             </div>
           )}
 
-          {/* Custom Menu Modal */}
-          {customMenuOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-              <div className="relative w-full max-w-3xl bg-[#0D0B09] border border-[#8C6D37]/40 rounded-2xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-                <button onClick={() => setCustomMenuOpen(false)} className="absolute top-5 right-5 text-neutral-400 hover:text-white">✕</button>
-                <div className="mb-4">
-                  <h2 className="font-serif text-2xl font-bold text-white">Custom Menu <span className="text-[#E5A947]">Curator</span></h2>
-                  <p className="text-xs text-neutral-300">Tap to select dishes for your royal gathering ({selectedDishes.length} selected)</p>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
-                  {dishesList.map((dish, i) => {
-                    const sel = selectedDishes.includes(dish);
-                    return (
-                      <button key={i} onClick={() => toggleDish(dish)} className={`p-2.5 rounded-lg border text-left text-xs flex justify-between items-center ${sel ? 'bg-[#E5A947]/20 border-[#E5A947] text-white' : 'bg-[#14120F] border-white/5 text-neutral-300'}`}>
-                        <span>{dish}</span>
-                        <span>{sel ? '✓' : '+'}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-                <button onClick={() => { setCustomMenuOpen(false); setBookingOpen(true); }} className="w-full py-3 rounded-xl bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] text-black font-semibold text-xs tracking-wider uppercase">
-                  Request Quotation For Selected Menu ({selectedDishes.length} items)
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Toast Notification */}
+          {/* Toast */}
           {toast && (
             <div className="fixed bottom-6 right-6 z-50 bg-[#14120F] border border-[#E5A947] text-white p-4 rounded-xl shadow-2xl max-w-sm">
               <div className="text-xs font-bold text-[#E5A947] uppercase">{toast.title}</div>

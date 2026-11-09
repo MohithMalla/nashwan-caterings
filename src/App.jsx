@@ -1,20 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import CelebrationSection from './components/CelebrationSection';
+import MenuPricingSection from './components/MenuPricingSection';
+import HomeServicesSection from './components/HomeServicesSection';
 import AboutPage from './pages/AboutPage';
 import MenuPage from './pages/MenuPage';
 import CustomCateringPage from './pages/CustomCateringPage';
 import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
+import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
 import CustomMenuModal from './components/CustomMenuModal';
 import Toast from './components/Toast';
 
 export default function App() {
-  const [activePage, setActivePage] = useState('home');
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [bookingOpen, setBookingOpen] = useState(false);
   const [customMenuOpen, setCustomMenuOpen] = useState(false);
   const [toast, setToast] = useState(null);
+
+  // Derive activePage string from URL path for Navbar highlighting
+  const getActivePage = () => {
+    const path = location.pathname.replace(/^\//, '');
+    if (!path || path === 'home') return 'home';
+    if (path.startsWith('about')) return 'about';
+    if (path.startsWith('menu')) return 'menu';
+    if (path.startsWith('custom')) return 'custom';
+    if (path.startsWith('services')) return 'custom';
+    if (path.startsWith('gallery')) return 'gallery';
+    if (path.startsWith('contact')) return 'contact';
+    return 'home';
+  };
+
+  const activePage = getActivePage();
 
   const handleBookingSuccess = (data) => {
     setToast({
@@ -23,75 +45,124 @@ export default function App() {
     });
   };
 
-  const handleNavigate = (page) => {
-    setActivePage(page);
+  const handleNavigate = (page, category) => {
+    let target = page === 'home' ? '/' : `/${page}`;
+    if (page === 'menu' && category) {
+      target = `/menu?category=${category}`;
+    }
+    navigate(target);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
-    <div className={`bg-[#080706] text-[#FDFBF7] font-sans selection:bg-[#E5A947]/30 selection:text-white ${
-      activePage === 'home' ? 'h-screen w-screen overflow-hidden' : 'min-h-screen'
-    }`}>
+    <div className="bg-[#01142B] text-[#FDFBF7] font-sans selection:bg-[#E5A947]/30 selection:text-white min-h-screen">
       
-      {/* Universal Top Navigation - Matching reference screenshot */}
+      {/* Universal Top Navigation - Connected to Router */}
       <Navbar 
         activePage={activePage}
         onNavigate={handleNavigate}
         onOpenBooking={() => setBookingOpen(true)}
         onOpenCustomMenu={() => handleNavigate('custom')}
-        onOpenMenu={() => handleNavigate('menu')}
+        onOpenMenu={() => handleNavigate('menu', 'veg')}
         onOpenGallery={() => handleNavigate('gallery')}
         onOpenAbout={() => handleNavigate('about')}
         onOpenContact={() => handleNavigate('contact')}
       />
 
-      {/* Pages Container: EXACT untouched home page when activePage === 'home' */}
-      {activePage === 'home' && (
-        <main className="flex-1 h-full w-full overflow-hidden">
-          <Hero 
-            onOpenBooking={() => setBookingOpen(true)}
-            onOpenCustomMenu={() => handleNavigate('custom')}
-            onOpenMenu={() => handleNavigate('menu')}
+      {/* Declarative Routes for every page */}
+      <Routes>
+        
+        {/* ==================== 1. HOME ROUTE ==================== */}
+        <Route path="/" element={
+          <main className="w-full">
+            {/* Top Hero Section */}
+            <Hero 
+              onOpenBooking={() => setBookingOpen(true)}
+              onOpenCustomMenu={() => handleNavigate('custom')}
+              onOpenMenu={() => handleNavigate('menu', 'veg')}
+            />
+
+            {/* Celebration Occasions Selector */}
+            <CelebrationSection 
+              onNavigate={handleNavigate}
+              onOpenBooking={() => setBookingOpen(true)}
+              onOpenCustomMenu={() => handleNavigate('custom')}
+            />
+
+            {/* Curated Menu Pricing Section - Transparent Veg & Non-Veg Packages */}
+            <MenuPricingSection 
+              onNavigate={handleNavigate}
+              onOpenBooking={() => setBookingOpen(true)}
+            />
+
+            {/* Main Top Services & Sections below Hero */}
+            <HomeServicesSection 
+              onNavigate={handleNavigate}
+              onOpenBooking={() => setBookingOpen(true)}
+              onOpenCustomMenu={() => handleNavigate('custom')}
+            />
+
+            {/* Home Page Footer */}
+            <Footer 
+              onNavigate={handleNavigate}
+              onOpenBooking={() => setBookingOpen(true)}
+            />
+          </main>
+        } />
+        <Route path="/home" element={<Navigate to="/" replace />} />
+
+        {/* ==================== 2. ABOUT ROUTE ==================== */}
+        <Route path="/about" element={
+          <AboutPage 
+            onNavigate={handleNavigate} 
+            onOpenBooking={() => setBookingOpen(true)} 
           />
-        </main>
-      )}
+        } />
 
-      {activePage === 'about' && (
-        <AboutPage 
-          onNavigate={handleNavigate} 
-          onOpenBooking={() => setBookingOpen(true)} 
-        />
-      )}
+        {/* ==================== 3. MENU ROUTE ==================== */}
+        <Route path="/menu" element={
+          <MenuPage 
+            onNavigate={handleNavigate} 
+            onOpenBooking={() => setBookingOpen(true)} 
+            onOpenCustomMenu={() => handleNavigate('custom')}
+          />
+        } />
 
-      {activePage === 'menu' && (
-        <MenuPage 
-          onNavigate={handleNavigate} 
-          onOpenBooking={() => setBookingOpen(true)} 
-          onOpenCustomMenu={() => setCustomMenuOpen(true)}
-        />
-      )}
+        {/* ==================== 4. CUSTOM MENU / SERVICES ROUTE ==================== */}
+        <Route path="/custom" element={
+          <CustomCateringPage 
+            onNavigate={handleNavigate} 
+            onOpenBooking={() => setBookingOpen(true)} 
+            onOpenCustomMenu={() => handleNavigate('custom')}
+          />
+        } />
+        <Route path="/custom-menu" element={<Navigate to="/custom" replace />} />
+        <Route path="/services" element={<Navigate to="/custom" replace />} />
 
-      {activePage === 'custom' && (
-        <CustomCateringPage 
-          onNavigate={handleNavigate} 
-          onOpenBooking={() => setBookingOpen(true)} 
-          onOpenCustomMenu={() => setCustomMenuOpen(true)}
-        />
-      )}
+        {/* ==================== 5. GALLERY ROUTE ==================== */}
+        <Route path="/gallery" element={
+          <GalleryPage 
+            onNavigate={handleNavigate} 
+            onOpenBooking={() => setBookingOpen(true)} 
+          />
+        } />
 
-      {activePage === 'gallery' && (
-        <GalleryPage 
-          onNavigate={handleNavigate} 
-          onOpenBooking={() => setBookingOpen(true)} 
-        />
-      )}
+        {/* ==================== 6. CONTACT ROUTE ==================== */}
+        <Route path="/contact" element={
+          <ContactPage 
+            onNavigate={handleNavigate} 
+            onOpenBooking={() => setBookingOpen(true)} 
+          />
+        } />
 
-      {activePage === 'contact' && (
-        <ContactPage 
-          onNavigate={handleNavigate} 
-          onOpenBooking={() => setBookingOpen(true)} 
-        />
-      )}
+        {/* Catch-all redirect to Home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
 
       {/* Booking & Quote Overlays */}
       <BookingModal 
