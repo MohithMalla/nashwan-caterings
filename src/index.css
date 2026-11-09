@@ -89,6 +89,22 @@ p, li, input, select, textarea, .font-body, .font-lato {
   background: #ECC870;
 }
 
+/* Custom scrollbar for sidebars */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(1, 20, 43, 0.5);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(236, 200, 112, 0.4);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(236, 200, 112, 0.8);
+}
+
 /* Gold Gradient Text */
 .text-gold-gradient {
   background: linear-gradient(135deg, #FFF0B8 0%, #D4AF37 50%, #AA820A 100%);

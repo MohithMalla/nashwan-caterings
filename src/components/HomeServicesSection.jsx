@@ -154,7 +154,7 @@ export default function HomeServicesSection({ onNavigate, onOpenBooking, onOpenC
           </svg>
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-8 sm:pb-10 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-8 sm:pb-10 relative">
           
           {/* Main Title: Why Choose Nashwan Caterings? (Section Heading: Cormorant Garamond 500) */}
           <div className="text-center mb-6 sm:mb-8">
@@ -164,7 +164,7 @@ export default function HomeServicesSection({ onNavigate, onOpenBooking, onOpenC
           </div>
 
           {/* Section Content: Left Handi + 4 Feature Columns + Right Charminar - Tight & Balanced Layout */}
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8 xl:gap-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 xl:gap-10">
             
             {/* Left: Steaming Biryani Copper Handi */}
             <div className="shrink-0 flex justify-center">
@@ -195,12 +195,12 @@ export default function HomeServicesSection({ onNavigate, onOpenBooking, onOpenC
               ))}
             </div>
 
-            {/* Right: Iconic Charminar Gold Line-Art Illustration */}
-            <div className="shrink-0 hidden lg:flex justify-center">
+            {/* Right: Iconic Charminar Gold Line-Art Illustration (Enlarged) */}
+            <div className="shrink-0 hidden md:flex items-center justify-center">
               <img 
                 src="assets/home/charminar_gold.jpg" 
                 alt="Charminar Heritage" 
-                className="w-20 xl:w-24 h-auto object-contain opacity-85 drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)]"
+                className="w-36 md:w-44 lg:w-48 xl:w-56 h-auto object-contain opacity-95 drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)] transition-transform duration-300 hover:scale-105"
               />
             </div>
 
@@ -378,12 +378,12 @@ export default function HomeServicesSection({ onNavigate, onOpenBooking, onOpenC
           </svg>
         </div>
 
-        <div className="max-w-[1700px] mx-auto px-4 sm:px-8 lg:px-12 pt-6 sm:pt-8 pb-12 sm:pb-16 relative">
+        <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-10 sm:pb-14 relative">
           
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-10">
             
-            {/* Left: Calendar Badge + Event Planning Copy */}
-            <div className="flex items-center gap-4 sm:gap-6 text-center md:text-left">
+            {/* Left/Center: Calendar Badge + Event Planning Copy */}
+            <div className="flex items-center gap-4 sm:gap-5 text-center sm:text-left">
               
               {/* Gold Circular Calendar Badge */}
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-[#ECC870] bg-[#0B1E38] flex items-center justify-center shrink-0 shadow-lg">
@@ -396,22 +396,22 @@ export default function HomeServicesSection({ onNavigate, onOpenBooking, onOpenC
               </div>
 
               {/* Headings (Section Heading: Cormorant Garamond 500) */}
-              <div>
-                <h3 className="font-cormorant text-2xl sm:text-3xl md:text-4xl text-white font-medium leading-tight">
+              <div className="shrink-0">
+                <h3 className="font-cormorant text-2xl sm:text-3xl md:text-4xl text-white font-medium leading-tight whitespace-nowrap">
                   Plan Your <span className="font-cormorant italic text-[#ECC870] font-medium">Next Event</span> with Us
                 </h3>
-                <p className="text-neutral-300 text-xs sm:text-sm mt-1 font-lato font-normal">
+                <p className="text-neutral-300 text-xs sm:text-sm mt-1 font-lato font-normal whitespace-normal sm:whitespace-nowrap">
                   Tell us about your event and get a customized catering plan.
                 </p>
               </div>
 
             </div>
 
-            {/* Right: Vertical Divider & "Get a Custom Quote →" Button & Charminar */}
-            <div className="flex items-center gap-6 sm:gap-8">
-              
-              {/* Vertical Gold Divider Line */}
-              <div className="hidden md:block h-12 w-[1px] bg-[#ECC870]/40" />
+            {/* Vertical Gold Divider Line */}
+            <div className="hidden lg:block h-14 w-[1px] bg-[#ECC870]/40 shrink-0" />
+
+            {/* Right: "Get a Custom Quote →" Button & Enlarged Charminar */}
+            <div className="flex items-center gap-5 sm:gap-7 shrink-0">
 
               {/* Get a Custom Quote Button (Button: Montserrat 500) */}
               <button 
@@ -422,12 +422,12 @@ export default function HomeServicesSection({ onNavigate, onOpenBooking, onOpenC
                 <span className="text-base leading-none">→</span>
               </button>
 
-              {/* Right: Charminar Watermark */}
-              <div className="hidden xl:block shrink-0">
+              {/* Enlarged Charminar Illustration */}
+              <div className="shrink-0 flex items-center justify-center">
                 <img 
                   src="assets/home/charminar_gold.jpg" 
-                  alt="Charminar" 
-                  className="w-20 xl:w-24 h-auto object-contain opacity-75"
+                  alt="Charminar Heritage" 
+                  className="w-28 sm:w-32 md:w-36 lg:w-40 xl:w-44 h-auto object-contain opacity-95 drop-shadow-[0_12px_24px_rgba(0,0,0,0.7)] transition-transform duration-300 hover:scale-105"
                 />
               </div>
 

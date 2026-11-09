@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import BottomNav from './components/BottomNav';
 import Hero from './components/Hero';
 import CelebrationSection from './components/CelebrationSection';
 import MenuPricingSection from './components/MenuPricingSection';
@@ -163,6 +164,12 @@ export default function App() {
         {/* Catch-all redirect to Home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      {/* Persistent Mobile Bottom Navigation (Home, About, Menu, Custom, Gallery, Contact) */}
+      <BottomNav 
+        activePage={activePage} 
+        onNavigate={handleNavigate} 
+      />
 
       {/* Booking & Quote Overlays */}
       <BookingModal 

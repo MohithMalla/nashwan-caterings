@@ -12,7 +12,7 @@ export default function Footer({ onNavigate, onOpenBooking }) {
           {/* Col 1: Brand & Philosophy */}
           <div className="space-y-4">
             <img 
-              src="assets/logo-cyan.png" 
+              src="assets/logo.png" 
               onError={(e) => { e.target.src = 'assets/logo.png' }}
               alt="Nashwan Caterings" 
               className="h-16 w-auto object-contain drop-shadow-[0_2px_12px_rgba(236,200,112,0.25)]"
