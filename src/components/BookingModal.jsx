@@ -8,7 +8,7 @@ export default function BookingModal({ isOpen, onClose, onBookingSuccess }) {
     eventType: 'Royal Wedding Banquet',
     eventDate: '',
     guestCount: '250 - 500 Guests',
-    cuisinePreference: 'Multi-Cuisine Royal Spread',
+    cuisinePreference: 'Both (Veg & Non Veg)',
     notes: ''
   });
 
@@ -48,12 +48,12 @@ export default function BookingModal({ isOpen, onClose, onBookingSuccess }) {
         {/* Modal Header */}
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#ECC870] text-xs font-semibold uppercase tracking-wider mb-2">
-            VIP Event Reservations
+            VIP Event Reservations & Quick Quote
           </div>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white">
-            Book Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFF5CE] via-[#ECC870] to-[#C5A059]">Celebration</span>
+          <h2 className="font-cormorant text-2xl sm:text-3xl lg:text-[30px] font-normal text-white leading-snug">
+            Tell us your date — <span className="font-cormorant italic text-[#ECC870]">we'll send a custom menu & quote in 30 minutes</span>
           </h2>
-          <p className="text-xs sm:text-sm text-neutral-300 mt-1">
+          <p className="text-xs sm:text-sm text-neutral-300 mt-2 font-lato">
             Fill the reservation details below or call directly at <span className="text-[#ECC870] font-semibold">9492247495</span> / <span className="text-[#ECC870] font-semibold">9949390829</span>.
           </p>
         </div>
@@ -152,11 +152,9 @@ export default function BookingModal({ isOpen, onClose, onBookingSuccess }) {
                   onChange={(e) => setFormData({...formData, cuisinePreference: e.target.value})}
                   className="w-full bg-[#14120F] border border-[#D4AF37]/30 rounded-xl pl-10 pr-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#ECC870] transition-colors"
                 >
-                  <option value="Multi-Cuisine Royal Spread">Multi-Cuisine Royal Spread</option>
-                  <option value="Authentic Hyderabadi Dum Dastarkhwan">Authentic Hyderabadi Dum Dastarkhwan</option>
-                  <option value="Mughlai & Tandoori Specialties">Mughlai & Tandoori Specialties</option>
-                  <option value="Pure Veg Royal Banqueting">Pure Veg Royal Banqueting</option>
-                  <option value="Continental & Live Counters">Continental & Live Counters</option>
+                  <option value="Veg">Veg</option>
+                  <option value="Non Veg">Non Veg</option>
+                  <option value="Both (Veg & Non Veg)">Both (Veg & Non Veg)</option>
                 </select>
               </div>
             </div>
@@ -191,6 +189,20 @@ export default function BookingModal({ isOpen, onClose, onBookingSuccess }) {
               <MessageSquare className="w-4 h-4 text-emerald-400" />
               <span>WhatsApp Chat</span>
             </a>
+          </div>
+
+          {/* Trust Badges: FSSAI & ISO Certified */}
+          <div className="pt-3 border-t border-[#D4AF37]/20 flex flex-wrap items-center justify-between text-[11px] text-neutral-400 gap-2">
+            <span className="flex items-center gap-2 text-[#ECC870]">
+              <span className="bg-white rounded px-1.5 py-0.5 inline-flex items-center shadow-sm">
+                <img src="assets/fssai.png" alt="FSSAI" className="h-4 w-auto object-contain" />
+              </span>
+              <span className="font-bold">Lic:</span> 23624031003794
+            </span>
+            <span className="text-neutral-500">•</span>
+            <span className="text-white/80">ISO 9001:2015 & ISO 22000 Certified</span>
+            <span className="text-neutral-500">•</span>
+            <span className="text-white/80">100% Halal Food Sourcing</span>
           </div>
 
         </form>

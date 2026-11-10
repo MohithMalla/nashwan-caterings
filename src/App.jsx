@@ -11,6 +11,8 @@ import MenuPage from './pages/MenuPage';
 import CustomCateringPage from './pages/CustomCateringPage';
 import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
+import QuotePage from './pages/QuotePage';
+import ServicesPage from './pages/ServicesPage';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
 import CustomMenuModal from './components/CustomMenuModal';
@@ -31,9 +33,10 @@ export default function App() {
     if (path.startsWith('about')) return 'about';
     if (path.startsWith('menu')) return 'menu';
     if (path.startsWith('custom')) return 'custom';
-    if (path.startsWith('services')) return 'custom';
+    if (path.startsWith('services')) return 'services';
     if (path.startsWith('gallery')) return 'gallery';
     if (path.startsWith('contact')) return 'contact';
+    if (path.startsWith('quote')) return 'quote';
     return 'home';
   };
 
@@ -134,7 +137,15 @@ export default function App() {
           />
         } />
 
-        {/* ==================== 4. CUSTOM MENU / SERVICES ROUTE ==================== */}
+        {/* ==================== 4. SERVICES ROUTE ==================== */}
+        <Route path="/services" element={
+          <ServicesPage 
+            onNavigate={handleNavigate} 
+            onOpenBooking={() => setBookingOpen(true)} 
+          />
+        } />
+
+        {/* ==================== 5. CUSTOM MENU ROUTE ==================== */}
         <Route path="/custom" element={
           <CustomCateringPage 
             onNavigate={handleNavigate} 
@@ -143,7 +154,6 @@ export default function App() {
           />
         } />
         <Route path="/custom-menu" element={<Navigate to="/custom" replace />} />
-        <Route path="/services" element={<Navigate to="/custom" replace />} />
 
         {/* ==================== 5. GALLERY ROUTE ==================== */}
         <Route path="/gallery" element={
@@ -160,6 +170,15 @@ export default function App() {
             onOpenBooking={() => setBookingOpen(true)} 
           />
         } />
+
+        {/* ==================== 7. GET A QUOTE ROUTE ==================== */}
+        <Route path="/quote" element={
+          <QuotePage 
+            onNavigate={handleNavigate} 
+            onBookingSuccess={handleBookingSuccess} 
+          />
+        } />
+        <Route path="/book" element={<Navigate to="/quote" replace />} />
 
         {/* Catch-all redirect to Home */}
         <Route path="*" element={<Navigate to="/" replace />} />

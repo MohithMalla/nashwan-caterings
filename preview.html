@@ -486,24 +486,12 @@ Please provide estimated pricing per plate and menu proposal.`;
                   ABOUT
                 </button>
 
-                <div className="relative" onMouseEnter={() => setServicesDropdown(true)} onMouseLeave={() => setServicesDropdown(false)}>
-                  <button onClick={() => handleNav('custom')} className="text-white/85 hover:text-white transition-colors flex items-center gap-1.5 uppercase font-medium">
-                    <span>SERVICES</span>
-                    <svg className="w-3.5 h-3.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
-                  </button>
-                  {servicesDropdown && (
-                    <div className="absolute top-full left-0 mt-2 w-72 bg-[#08182E]/95 backdrop-blur-xl border border-[#ECC870]/40 rounded-xl shadow-2xl py-2 z-50">
-                      <button onClick={() => { setServicesDropdown(false); handleNav('custom'); }} className="w-full text-left px-4 py-2 hover:bg-[#ECC870]/15 block">
-                        <div className="text-xs font-semibold text-white">Royal Wedding Banquets</div>
-                        <div className="text-[10px] text-neutral-400">Regal dining setups with silver service</div>
-                      </button>
-                      <button onClick={() => { setServicesDropdown(false); handleNav('custom'); }} className="w-full text-left px-4 py-2 hover:bg-[#ECC870]/15 block">
-                        <div className="text-xs font-semibold text-white">Corporate Galas & Summits</div>
-                        <div className="text-[10px] text-neutral-400">Refined buffets & executive protocol</div>
-                      </button>
-                    </div>
-                  )}
-                </div>
+                <button 
+                  onClick={() => handleNav('services')}
+                  className={`transition-colors uppercase font-medium ${activePage === 'services' ? 'text-[#ECC870] font-bold' : 'text-white/85 hover:text-white'}`}
+                >
+                  SERVICES
+                </button>
 
                 <button 
                   onClick={() => handleNav('menu')}
@@ -537,7 +525,7 @@ Please provide estimated pricing per plate and menu proposal.`;
                   onClick={() => setBookingOpen(true)}
                   className="inline-flex items-center justify-center px-7 sm:px-8 py-2.5 sm:py-3 rounded-[2px] text-xs font-semibold uppercase tracking-[0.2em] text-[#ECC870] hover:text-white bg-[#01142B]/70 hover:bg-[#ECC870]/20 border border-[#ECC870]/80 hover:border-[#ECC870] transition-all duration-200"
                 >
-                  <span>BOOK NOW</span>
+                  <span>GET A QUOTE</span>
                 </button>
 
                 <button onClick={() => setMobileMenu(!mobileMenu)} className="p-2 rounded-lg border border-[#ECC870]/40 text-[#ECC870] lg:hidden">
@@ -1241,7 +1229,7 @@ Please provide estimated pricing per plate and menu proposal.`;
                 <div className="max-w-4xl mx-auto flex flex-col items-center">
                   <img src="assets/logo.png" alt="Nashwan Catering Services" className="h-20 sm:h-24 w-auto object-contain mb-4" />
                   <div className="font-serif italic text-base sm:text-lg text-[#ECC870] mb-4">Authentic Flavours. Timeless Traditions. Unforgettable Celebrations.</div>
-                  <div className="flex flex-wrap justify-center gap-6 text-xs text-neutral-300 mb-6 font-medium">
+                  <div className="flex flex-wrap justify-center gap-6 text-xs text-neutral-300 mb-4 font-medium">
                     <button onClick={() => handleNav('home')} className="hover:text-[#ECC870] transition-colors">Home</button>
                     <button onClick={() => handleNav('about')} className="hover:text-[#ECC870] transition-colors">About</button>
                     <button onClick={() => handleNav('menu')} className="hover:text-[#ECC870] transition-colors">Menu</button>
@@ -1249,7 +1237,13 @@ Please provide estimated pricing per plate and menu proposal.`;
                     <button onClick={() => handleNav('gallery')} className="hover:text-[#ECC870] transition-colors">Gallery</button>
                     <button onClick={() => handleNav('contact')} className="hover:text-[#ECC870] transition-colors">Contact</button>
                   </div>
-                  <p className="text-white/60 text-[11px]">© {new Date().getFullYear()} Nashwan Caterings. Balaji Enclave, Uppal, Hyderabad, Telangana.<br />Direct Lines: 9492247495 • 9949390829</p>
+
+                  {/* FSSAI & ISO Logos */}
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <img src="assets/fssai-logo.svg" alt="FSSAI" className="h-8 w-auto object-contain" />
+                    <img src="assets/iso-logo.svg" alt="ISO 9001" className="h-8 w-auto object-contain rounded-[2px]" />
+                  </div>
+                  <p className="text-white/60 text-[11px]">© {new Date().getFullYear()} Nashwan Caterings. H.No: 2-20-17/5, Kummari Kunta, Chilka Nagar, Uppal, Medchal-Malkajgiri, Uppal Circle No.2, Hyderabad, Telangana - 500039.<br />Direct Lines: 9492247495 • 9949390829</p>
                 </div>
               </footer>
             </div>
@@ -1757,7 +1751,7 @@ Please provide estimated pricing per plate and menu proposal.`;
                     <h3 className="font-serif text-xl text-white mb-2">Connect With Nashwan</h3>
                     <div>
                       <strong className="text-white block">Location:</strong>
-                      <span>Nashwan Caterings, Balaji Enclave, Uppal, Hyderabad, Telangana</span>
+                      <span>Nashwan Caterings, H.No: 2-20-17/5, Kummari Kunta, Chilka Nagar, Uppal, Medchal-Malkajgiri, Uppal Circle No.2, Hyderabad, Telangana - 500039</span>
                     </div>
                     <div>
                       <strong className="text-white block">Calling & WhatsApp:</strong>
@@ -1850,7 +1844,8 @@ Please provide estimated pricing per plate and menu proposal.`;
                 <div className="text-center mb-6">
                   <div className="text-xs uppercase tracking-widest text-[#E5A947] font-semibold mb-1">VIP Reservations</div>
                   <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white">Book Your <span className="text-[#E5A947]">Celebration</span></h2>
-                  <p className="text-xs text-neutral-300 mt-1">Direct Lines: 9492247495 / 9949390829</p>
+                  <p className="font-serif italic text-sm text-[#ECC870] mt-1">Tell us your date — we'll send a custom menu & quote in 30 minutes</p>
+                  <p className="text-[11px] text-neutral-400 mt-0.5">Direct Lines: 9492247495 / 9949390829</p>
                 </div>
                 <form onSubmit={handleBookingSubmit} className="space-y-4">
                   <div>
@@ -1871,18 +1866,41 @@ Please provide estimated pricing per plate and menu proposal.`;
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-neutral-300 mb-1">Guest Count</label>
-                      <select value={bookingData.guests} onChange={(e) => setBookingData({...bookingData, guests: e.target.value})} className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3 py-2.5 text-xs text-white">
-                        <option>100 - 300 Guests</option>
-                        <option>300 - 600 Guests</option>
-                        <option>600 - 1200 Guests</option>
-                        <option>1200+ Guests</option>
+                      <label className="block text-xs font-medium text-neutral-300 mb-1">Cuisine Preference</label>
+                      <select value={bookingData.cuisinePreference || 'Both (Veg & Non Veg)'} onChange={(e) => setBookingData({...bookingData, cuisinePreference: e.target.value})} className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3 py-2.5 text-xs text-white">
+                        <option>Veg</option>
+                        <option>Non Veg</option>
+                        <option>Both (Veg & Non Veg)</option>
                       </select>
                     </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-neutral-300 mb-1">Guest Count</label>
+                    <select value={bookingData.guests} onChange={(e) => setBookingData({...bookingData, guests: e.target.value})} className="w-full bg-[#14120F] border border-[#8C6D37]/30 rounded-xl px-3 py-2.5 text-xs text-white">
+                      <option>50 - 150 Guests</option>
+                      <option>150 - 300 Guests</option>
+                      <option>300 - 600 Guests</option>
+                      <option>600 - 1200 Guests</option>
+                      <option>1200+ Mega Feast</option>
+                    </select>
                   </div>
                   <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] text-black font-semibold text-xs tracking-wider uppercase shadow-lg">
                     Confirm & Send Inquiry
                   </button>
+
+                  {/* Trust Badges */}
+                  <div className="pt-2 text-[10px] text-neutral-400 text-center flex items-center justify-center gap-3">
+                    <span className="flex items-center gap-1.5 text-[#ECC870]">
+                      <span className="bg-white rounded px-1.5 py-0.5 inline-flex items-center shadow-sm">
+                        <img src="assets/fssai.png" alt="FSSAI" className="h-3.5 w-auto object-contain" />
+                      </span>
+                      <span>Lic: 23624031003794</span>
+                    </span>
+                    <span>•</span>
+                    <span>ISO 9001 & 22000</span>
+                    <span>•</span>
+                    <span className="text-emerald-400">100% Halal</span>
+                  </div>
                 </form>
               </div>
             </div>

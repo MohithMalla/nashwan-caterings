@@ -236,8 +236,10 @@ export default function ContactPage({ onNavigate, onOpenBooking }) {
                       <MapPin className="w-4 h-4" />
                     </div>
                     <div>
-                      <strong className="text-white block font-medium">Nashwan Caterings</strong>
-                      <span className="text-white/80">Balaji Enclave, Uppal, Hyderabad, Telangana</span>
+                      <strong className="text-white block font-medium">Registered Commercial Facility</strong>
+                      <span className="text-white/80 leading-relaxed text-xs block mt-0.5">
+                        H.No: 2-20-17/5, Kummari Kunta, Chilka Nagar, Uppal, Medchal-Malkajgiri, Uppal Circle No.2, Hyderabad, Telangana - 500039
+                      </span>
                     </div>
                   </div>
 
@@ -283,8 +285,33 @@ export default function ContactPage({ onNavigate, onOpenBooking }) {
 
                 </div>
 
+                {/* Government Licensing & Food Safety Compliance */}
+                <div className="pt-4 border-t border-white/10 space-y-2.5">
+                  <div className="p-3 rounded-[10px] bg-black/40 border border-[#ECC870]/30 flex items-start gap-3">
+                    <div className="bg-white rounded px-2 py-1 flex items-center justify-center shrink-0 shadow-sm border border-neutral-200 mt-0.5">
+                      <img src="assets/fssai.png" alt="FSSAI" className="h-6 w-auto object-contain" />
+                    </div>
+                    <div className="text-xs">
+                      <div className="font-bold text-[#ECC870]">FSSAI Registered Establishment</div>
+                      <div className="text-[11px] text-white/90">Registration No: <span className="font-mono font-bold text-[#ECC870]">23624031003794</span></div>
+                      <div className="text-[10px] text-neutral-400">Govt. of Telangana • Valid Upto: 17-12-2029</div>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-[10px] bg-black/40 border border-[#ECC870]/30 flex items-start gap-3">
+                    <div className="w-7 h-7 rounded-full bg-[#ECC870]/20 flex items-center justify-center text-[#ECC870] font-bold text-[10px] shrink-0 mt-0.5">
+                      ★
+                    </div>
+                    <div className="text-xs">
+                      <div className="font-bold text-[#ECC870]">ISO 9001:2015 & ISO 22000:2018</div>
+                      <div className="text-[11px] text-white/90">Certified Food Safety & Quality Management System</div>
+                      <div className="text-[10px] text-emerald-400 font-semibold">100% Halal Certified Kitchen Operations</div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* JustDial Card */}
-                <div className="pt-4 border-t border-white/10">
+                <div className="pt-2">
                   <a 
                     href="https://www.justdial.com/Hyderabad/Nashwan-Catering-Services-Balaji-Enclave-Uppal/040PXX40-XX40-250414090522-R6N9_BZDET"
                     target="_blank"

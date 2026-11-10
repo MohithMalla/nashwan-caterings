@@ -24,6 +24,20 @@ export default function Footer({ onNavigate, onOpenBooking }) {
             <p className="text-xs text-[#ECC870] italic">
               "Taste the Tradition. Celebrate the Moment."
             </p>
+
+            {/* FSSAI & ISO Certifications */}
+            <div className="pt-2 flex items-center gap-4">
+              <img 
+                src="assets/fssai-logo.svg" 
+                alt="FSSAI" 
+                className="h-9 w-auto object-contain" 
+              />
+              <img 
+                src="assets/iso-logo.svg" 
+                alt="ISO 9001 Quality Assurance" 
+                className="h-9 w-auto object-contain rounded-[2px]" 
+              />
+            </div>
           </div>
 
           {/* Col 2: Navigation Links */}
@@ -43,6 +57,11 @@ export default function Footer({ onNavigate, onOpenBooking }) {
                 </button>
               </li>
               <li>
+                <button onClick={() => onNavigate('services')} className="hover:text-[#ECC870] transition-colors">
+                  Catering Services
+                </button>
+              </li>
+              <li>
                 <button onClick={() => onNavigate('menu')} className="hover:text-[#ECC870] transition-colors">
                   The Taste of Hyderabad Menu
                 </button>
@@ -55,6 +74,11 @@ export default function Footer({ onNavigate, onOpenBooking }) {
               <li>
                 <button onClick={() => onNavigate('gallery')} className="hover:text-[#ECC870] transition-colors">
                   Celebration Gallery
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('quote')} className="hover:text-[#ECC870] transition-colors text-[#ECC870] font-semibold">
+                  Get a Free Quote (30 Mins)
                 </button>
               </li>
               <li>
@@ -83,7 +107,7 @@ export default function Footer({ onNavigate, onOpenBooking }) {
           {/* Col 4: Direct Contact & Location */}
           <div className="space-y-3">
             <h4 className="text-xs font-serif font-bold uppercase tracking-widest text-[#ECC870] mb-4">
-              Direct Inquiries
+              Registered Office & Contact
             </h4>
             <div className="text-xs text-neutral-300 space-y-2">
               <div className="flex items-center gap-2">
@@ -94,7 +118,9 @@ export default function Footer({ onNavigate, onOpenBooking }) {
               </div>
               <div className="flex items-start gap-2">
                 <MapPin className="w-3.5 h-3.5 text-[#ECC870] shrink-0 mt-0.5" />
-                <span>Hyderabad & Secunderabad, Telangana</span>
+                <span className="leading-snug">
+                  H.No: 2-20-17/5, Kummari Kunta, Chilka Nagar, Uppal, Medchal-Malkajgiri, Uppal Circle No.2, Hyderabad, Telangana - 500039
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5 text-[#ECC870]" />
@@ -104,14 +130,59 @@ export default function Footer({ onNavigate, onOpenBooking }) {
 
             <div className="pt-2">
               <button 
-                onClick={onOpenBooking}
-                className="w-full py-2.5 px-4 rounded-[2px] bg-[#ECC870] hover:bg-[#F3D68A] text-[#01142B] text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md"
+                onClick={() => onNavigate('quote')}
+                className="w-full py-2.5 px-4 rounded-[2px] bg-[#ECC870] hover:bg-[#F3D68A] text-[#01142B] text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md font-montserrat"
               >
-                Plan Your Event
+                GET A QUOTE
               </button>
             </div>
           </div>
 
+        </div>
+
+        {/* Certifications & Government Compliance Bar */}
+        <div className="py-6 border-b border-[#ECC870]/20 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div className="flex items-center gap-3 p-3 rounded-lg bg-[#01162F] border border-[#ECC870]/30 hover:border-[#ECC870]/60 transition-colors">
+            <div className="bg-white rounded px-2 py-1 flex items-center justify-center shrink-0 shadow-sm border border-neutral-200">
+              <img src="assets/fssai-logo.svg" alt="FSSAI" className="h-6 w-auto object-contain" />
+            </div>
+            <div>
+              <div className="font-montserrat text-white font-semibold text-[11px] uppercase tracking-wide">
+                FSSAI Lic. No: <span className="text-[#ECC870] font-mono">23624031003794</span>
+              </div>
+              <div className="text-[10px] text-neutral-400">
+                Govt. of Telangana • Food Safety & Standards Authority of India (Valid Upto 2029)
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 p-3 rounded-lg bg-[#01162F] border border-[#ECC870]/30">
+            <div className="flex items-center justify-center shrink-0 shadow-sm">
+              <img src="assets/iso-logo.svg" alt="ISO 9001" className="h-8 w-auto object-contain rounded-[2px]" />
+            </div>
+            <div>
+              <div className="font-montserrat text-white font-semibold text-[11px] uppercase tracking-wide">
+                ISO 9001:2015 & ISO 22000:2018
+              </div>
+              <div className="text-[10px] text-neutral-400">
+                Certified Food Safety & Quality Management System
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 p-3 rounded-lg bg-[#01162F] border border-amber-500/30">
+            <div className="text-amber-400 font-bold text-xs bg-amber-950/60 px-2 py-1 rounded border border-amber-500/40">
+              حلال
+            </div>
+            <div>
+              <div className="font-montserrat text-white font-semibold text-[11px] uppercase tracking-wide">
+                100% Halal Preparation
+              </div>
+              <div className="text-[10px] text-neutral-400">
+                Strict Hyderabadi culinary traditions & authenticated sourcing
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Bottom Copyright */}

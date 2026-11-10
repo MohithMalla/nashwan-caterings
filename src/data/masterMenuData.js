@@ -1,12 +1,15 @@
 // Master Menu Database - All Categories & Items
-// PRASIDH CATERERS / NASHWAN CATERING
-// Neredmet X Roads, Sainikpuri, Secunderabad, Telangana 500056 | 90595 30560 / 97003 45352
+// NASHWAN CATERING SERVICES - HYDERABAD
+// FSSAI Reg. No: 23624031003794 | ISO Certified Food Safety
 
 export const MASTER_MENU_INFO = {
   brand: "Nashwan Catering Services",
   subBrand: "Nashwan Catering Services",
   tagline: "Authentic flavours, traditional recipes and heartfelt hospitality",
-  address: "Balaji Enclave, Uppal, Hyderabad, Telangana",
+  address: "H.No: 2-20-17/5, Kummari Kunta, Chilka Nagar, Uppal, Medchal-Malkajgiri, Uppal Circle No.2, Hyderabad, Telangana - 500039",
+  fssai: "23624031003794",
+  fssaiValidity: "17-12-2029",
+  iso: "ISO 9001:2015 & ISO 22000:2018 Certified",
   phones: ["9492247495", "9949390829"],
   whatsapp: "919949390829"
 };

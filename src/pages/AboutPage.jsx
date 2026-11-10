@@ -27,8 +27,8 @@ export default function AboutPage({ onNavigate, onOpenBooking }) {
     },
     {
       title: 'HYGIENE',
-      tag: '5-Star Sanitation',
-      desc: 'Maintaining careful food preparation, sanitized temperature-controlled storage, and spotless service practices.',
+      tag: 'FSSAI & ISO Standards',
+      desc: 'FSSAI Registered (23624031003794), ISO 9001:2015 & ISO 22000:2018 certified processes with spotless 5-star sanitation.',
       icon: (
         <svg className="w-6 h-6 text-[#ECC870]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -235,6 +235,31 @@ export default function AboutPage({ onNavigate, onOpenBooking }) {
                 </p>
               </div>
             ))}
+          </div>
+
+          {/* Official Certifications & Compliance */}
+          <div className="mt-14 pt-10 border-t border-[#ECC870]/30 grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div className="p-4 rounded-[12px] bg-[#021A38] border border-[#ECC870]/30 text-center space-y-1.5 flex flex-col items-center">
+              <div className="bg-white rounded px-2.5 py-1 inline-flex items-center justify-center shadow-sm border border-neutral-200 mb-1">
+                <img src="assets/fssai.png" alt="FSSAI Logo" className="h-6 w-auto object-contain" />
+              </div>
+              <span className="text-[10px] uppercase tracking-widest text-[#ECC870] font-bold block">Government of Telangana</span>
+              <div className="font-serif text-lg text-white font-medium">FSSAI Registered</div>
+              <div className="text-xs text-[#ECC870] font-mono font-bold">Lic. No: 23624031003794</div>
+              <div className="text-[11px] text-neutral-400">Valid Upto: 17-12-2029</div>
+            </div>
+            <div className="p-4 rounded-[12px] bg-[#021A38] border border-[#ECC870]/30 text-center space-y-1">
+              <span className="text-[10px] uppercase tracking-widest text-[#ECC870] font-bold block">Global Standards</span>
+              <div className="font-serif text-lg text-white font-medium">ISO 9001 & ISO 22000</div>
+              <div className="text-xs text-[#ECC870] font-bold">Food Safety & Quality Certified</div>
+              <div className="text-[11px] text-neutral-400">Standardized Culinary Operations</div>
+            </div>
+            <div className="p-4 rounded-[12px] bg-[#021A38] border border-[#ECC870]/30 text-center space-y-1">
+              <span className="text-[10px] uppercase tracking-widest text-[#ECC870] font-bold block">Culinary Assurance</span>
+              <div className="font-serif text-lg text-white font-medium">100% Halal Verified</div>
+              <div className="text-xs text-emerald-400 font-bold">Hygienic Sourcing & Preparation</div>
+              <div className="text-[11px] text-neutral-400">Uppal Commercial Kitchen Facility</div>
+            </div>
           </div>
 
         </div>

@@ -78,45 +78,17 @@ export default function Navbar({
               ABOUT
             </button>
 
-            {/* Services with Dropdown Chevron */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setServicesDropdownOpen(true)}
-              onMouseLeave={() => setServicesDropdownOpen(false)}
+            {/* Services */}
+            <button 
+              onClick={() => handleNav('services')}
+              className={`transition-colors ${
+                activePage === 'services' 
+                  ? 'text-[#ECC870] font-bold' 
+                  : 'text-white/85 hover:text-white'
+              }`}
             >
-              <button 
-                onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
-                className={`transition-colors flex items-center gap-1.5 ${
-                  activePage === 'custom' || servicesDropdownOpen
-                    ? 'text-[#ECC870] font-bold' 
-                    : 'text-white/85 hover:text-white'
-                }`}
-              >
-                <span>SERVICES</span>
-                <ChevronDown className="w-3.5 h-3.5 text-white/70" />
-              </button>
-
-              {servicesDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-72 bg-[#08182E]/95 backdrop-blur-xl border border-[#ECC870]/40 rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.85)] py-2 z-50">
-                  <div className="px-3.5 py-1.5 border-b border-[#ECC870]/20 mb-1">
-                    <span className="text-[10px] uppercase tracking-widest text-[#ECC870] font-semibold">Specialized Offerings</span>
-                  </div>
-                  {servicesList.map((service, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        setServicesDropdownOpen(false);
-                        handleNav('custom');
-                      }}
-                      className="w-full text-left px-3.5 py-2 hover:bg-[#ECC870]/15 block transition-colors"
-                    >
-                      <div className="text-xs font-semibold text-white">{service.title}</div>
-                      <div className="text-[10px] text-neutral-400">{service.desc}</div>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+              SERVICES
+            </button>
 
             {/* Menu */}
             <button 
@@ -167,13 +139,13 @@ export default function Navbar({
             </button>
           </nav>
 
-          {/* Right Section: Gold Outlined "BOOK NOW" Button (Button: Montserrat 500) */}
+          {/* Right Section: Gold Outlined "GET A QUOTE" Button (Button: Montserrat 500) */}
           <div className="flex items-center gap-3">
             <button 
-              onClick={onOpenBooking}
+              onClick={() => onNavigate('quote')}
               className="font-montserrat px-6 sm:px-7 py-2.5 rounded-[2px] border border-[#ECC870]/80 hover:border-[#ECC870] hover:bg-[#ECC870]/10 text-white hover:text-[#ECC870] text-xs font-medium uppercase tracking-[0.2em] transition-all duration-200 shadow-sm"
             >
-              BOOK NOW
+              GET A QUOTE
             </button>
 
             {/* Mobile Hamburger Toggle */}
@@ -218,6 +190,7 @@ export default function Navbar({
               <div className="flex flex-col gap-3 py-4 text-base">
                 <button onClick={() => { setMobileMenuOpen(false); handleNav('home'); }} className={`text-left ${activePage === 'home' ? 'text-[#E5A947] font-semibold' : 'text-neutral-300'}`}>Home</button>
                 <button onClick={() => { setMobileMenuOpen(false); handleNav('about'); }} className={`text-left ${activePage === 'about' ? 'text-[#E5A947] font-semibold' : 'text-neutral-300'}`}>About Us</button>
+                <button onClick={() => { setMobileMenuOpen(false); handleNav('services'); }} className={`text-left ${activePage === 'services' ? 'text-[#E5A947] font-semibold' : 'text-neutral-300'}`}>Services</button>
                 <button onClick={() => { setMobileMenuOpen(false); handleNav('menu'); }} className={`text-left ${activePage === 'menu' ? 'text-[#E5A947] font-semibold' : 'text-neutral-300'}`}>Menu</button>
                 <button onClick={() => { setMobileMenuOpen(false); handleNav('custom'); }} className={`text-left ${activePage === 'custom' ? 'text-[#E5A947] font-semibold' : 'text-neutral-300'}`}>Custom Catering</button>
                 <button onClick={() => { setMobileMenuOpen(false); handleNav('gallery'); }} className={`text-left ${activePage === 'gallery' ? 'text-[#E5A947] font-semibold' : 'text-neutral-300'}`}>Gallery</button>
@@ -226,11 +199,11 @@ export default function Navbar({
             </div>
 
             <button 
-              onClick={() => { setMobileMenuOpen(false); onOpenBooking(); }}
+              onClick={() => { setMobileMenuOpen(false); onNavigate('quote'); }}
               className="w-full py-3 rounded-full bg-gradient-to-r from-[#F6CA68] via-[#EDA83D] to-[#E39626] text-black font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 shadow-lg"
             >
               <Calendar className="w-4 h-4 text-black" />
-              BOOK NOW
+              GET A QUOTE
             </button>
           </div>
         </div>
